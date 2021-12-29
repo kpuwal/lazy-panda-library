@@ -19,5 +19,5 @@ server/node_modules/
 .DS_Store
 
 server/credentials.json
-
+barcode-scanner-app/env.d.ts
 notes.txt
