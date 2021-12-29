@@ -1,0 +1,23 @@
+barcode-scanner-app/node_modules/
+barcode-scanner-app/.expo
+barcode-scanner-app/dist/
+barcode-scanner-app/npm-debug.*
+barcode-scanner-app/.expo-shared
+*.env
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+barcode-scanner-app/web-build/
+
+# server
+server/node_modules/
+
+# macOS
+.DS_Store
+
+server/credentials.json
+
+notes.txt
