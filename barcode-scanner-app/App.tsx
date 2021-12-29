@@ -204,7 +204,8 @@ export default function App() {
             </BookForm>) :
             <ScanningGIF />
         }
-        
+        {scanned ? <View /> : <Text style={styles.infoTxt}>Scanning ...</Text>}
+        {!scanned || isLoaded ? <View /> : <Text style={styles.infoTxt}>Loading ... </Text>}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -235,5 +236,11 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: '#9d9d9d',
+  },
+  infoTxt: {
+    // color: '#0080FF',
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 20,
   }
 });
