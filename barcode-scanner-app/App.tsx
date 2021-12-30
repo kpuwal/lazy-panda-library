@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback, Keyboard, Text, View, StyleSheet, TouchableHi
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import BookForm from './components/BookForm';
 import ScanningGIF from './components/ScanningGIF';
-import { APP_ENV_IP } from '@env';
+import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -49,7 +49,7 @@ export default function App() {
 
   const fetchPickerData = async () => {
     try {
-      const newsData = await fetch(`${APP_ENV_IP}/api/picker`);
+      const newsData = await fetch(`${APP_ENV_ADDRESS}/api/picker`);
       const json = await newsData.json();
       const shiftedValues = json.values.map((item: string[]) => {
         item.shift();
@@ -114,7 +114,7 @@ export default function App() {
     } 
     
     try {
-      const newsData = await fetch(`${APP_ENV_IP}/api/book`, config);
+      const newsData = await fetch(`${APP_ENV_ADDRESS}/api/book`, config);
       const json = await newsData.json();
 
       if (json.totalItems === 0) {
@@ -158,7 +158,7 @@ export default function App() {
     setDisabled(true);
 
     try {
-      await fetch(`${APP_ENV_IP}/api/add-book`, config);
+      await fetch(`${APP_ENV_ADDRESS}/api/add-book`, config);
     } catch(err) {
       alert('ERROR saving the book!') // FIX errors!
     }
