@@ -1,184 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableWithoutFeedback, Keyboard, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import BookForm from './BookForm';
-import ScanningGIF from './ScanningGIF';
-import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../redux/store';
-import { fetchBook, saveBook } from '../redux/slices/bookSlice';
+import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
 import { fetchPicker } from '../redux/slices/pickerSlice';
 
-export default function Main() {
-  const book = useSelector((state: RootState) => state.book);
-  
+import BookForm from './BookForm';
+import ScanningGIF from './ScanningGIF';
+
+type BarCodeScannerTypes = {
+  type: string,
+  data: string,
+}
+
+export default function Main() {  
   const [hasPermission, setHasPermission] = useState(null);
   const [isDisabled, setDisabled] = useState(false);
   const [scanned, setScanned] = useState(false);
 
+  const book = useSelector((state: RootState) => state.book);
   const dispatch = useAppDispatch();
-
-  // const [toSaveValues, setToSaveValues]= useState({
-  //   title: '',
-  //   author: '',
-  //   language: '',
-  //   publishedDate: '',
-  //   pageCount: '',
-  //   genre: '',
-  //   series: '',
-  //   world: '',
-  //   readBy: '',
-  // })
-
-  // const [bookData, setBookData] = useState({
-  //   title: '',
-  //   subtitle: '',
-  //   authors: [],
-  //   pageCount: 0,
-  //   publishedDate: '',
-  //   language: '',
-  // })
-
-  // const [pickerData, setPickerData] = useState({
-  //   genre: [{label: '', value: ''}],
-  //   series: [{label: '', value: ''}],
-  //   world: [{label: '', value: ''}],
-  //   readBy: [{label: '', value: ''}],
-  // })
-
-  // const createPickerCategory = (items: string[]) => {
-  //   return items.map((el: string): {label: string, value: string} => 
-  //     {
-  //       return {label: el, value: el}
-  //     }
-  //   )
-  // }
-
-  // const fetchPickerData = async () => {
-  //   try {
-  //     const newsData = await fetch(`${APP_ENV_IP}/api/picker`);
-  //     const json = await newsData.json();
-  //     console.log("JSON ", json)
-  //     const shiftedValues = json.values.map((item: string[]) => {
-  //       item.shift();
-  //       return item;
-  //     })
-  //     const genre = createPickerCategory(shiftedValues[0]);
-  //     const series = createPickerCategory(shiftedValues[1]);
-  //     const world = createPickerCategory(shiftedValues[2]);
-  //     const readBy = createPickerCategory(shiftedValues[3]);
-   
-  //     setPickerData({
-  //       genre: genre,
-  //       series: series,
-  //       world: world,
-  //       readBy: readBy,
-  //     });
-  //   } catch(err) {
-  //     alert('server not connected') // FIX errors!
-  //   }
-  // }
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-      // fetchPickerData();
       dispatch(fetchPicker());
     })();
-    // clearBookForm();
   }, []);
 
-  type BarCodeScannerTypes = {
-    type: string,
-    data: string,
-  }
-
-  // const clearBookForm = () => {
-  //   setBookData({
-  //     title: '',
-  //     subtitle: '',
-  //     authors: [],
-  //     pageCount: 0,
-  //     publishedDate: '',
-  //     language: '',
-  //   })
-  // }
-
   const handleBarCodeScanned = ({ type, data }: BarCodeScannerTypes) => {
-    // clearBookForm();
-    // setLoaded(false);
+    dispatch(cleanBook(data));
     dispatch(fetchBook(data));
-    // fetchData(data);
     setDisabled(false);
     setScanned(true);
   };
 
-  // const fetchData = async (isbn: string) => {
-  //   const config = {
-  //     method: 'POST',
-  //     body: JSON.stringify({isbn}),
-  //     headers: { 
-  //       'Content-Type': 'application/json',
-  //      }
-  //   } 
-    
-  //   try {
-  //     const newsData = await fetch(`${APP_ENV_ADDRESS}/api/book`, config);
-  //     const json = await newsData.json();
-
-  //     if (json.totalItems === 0) {
-  //       alert("Sorry, the book was not found in the database");
-  //     } else {
-  //       const data = json.items[0].volumeInfo;
-  //       setBookData({
-  //         title: data.title,
-  //         subtitle: data.subtitle === undefined ? "" : data.subtitle,
-  //         authors: data.authors,
-  //         pageCount: data.pageCount,
-  //         publishedDate: data.publishedDate,
-  //         language: data.language,
-  //       });
-  //     }
-  //   } catch(err) {
-  //     alert('server not connected') // FIX errors!
-  //   } finally {
-  //     setLoaded(true);
-  //   };
-  // }
-
   const saveDataToDB = async () => {
     dispatch(saveBook(book));
-
-    // const config = {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     title: toSaveValues.title,
-    //     author: toSaveValues.author,
-    //     language: toSaveValues.language,
-    //     publishedDate: toSaveValues.publishedDate,
-    //     pageCount: toSaveValues.pageCount,
-    //     genre: toSaveValues.genre,
-    //     series: toSaveValues.series,
-    //     world: toSaveValues.world,
-    //     readBy: toSaveValues.readBy,
-    //   }),
-    //   headers: { 
-    //     'Content-Type': 'application/json',
-    //    }
-    // }
     setDisabled(true);
-
-    // try {
-    //   await fetch(`${APP_ENV_ADDRESS}/api/add-book`, config);
-    // } catch(err) {
-    //   alert('ERROR saving the book!') // FIX errors!
-    // }
   }
-
-  // const handleSave = (title: string, author: string, language: string, publishedDate: string, pageCount: string, genre: string, series: string, world: string, readBy: string) => {
-  //   setToSaveValues({...{title, author, language, publishedDate, pageCount, genre, series, world, readBy}})
-  // }
 
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
@@ -250,7 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#9d9d9d',
   },
   infoTxt: {
-    // color: '#0080FF',
     color: 'red',
     fontWeight: 'bold',
     fontSize: 20,
