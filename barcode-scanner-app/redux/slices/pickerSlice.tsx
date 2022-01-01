@@ -5,6 +5,7 @@ import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 const isLocal = true;
 
 type pickerTypes = {label: string, value: string};
+
 type pickerDataTypes = {
   genre: pickerTypes[],
   series: pickerTypes[],
@@ -13,11 +14,13 @@ type pickerDataTypes = {
   pickerError: string,
 }
 
+const pickerDefault = [{label: '', value: ''}];
+
 const initialState: pickerDataTypes = {
-  genre: [{label: '', value: ''}],
-  series: [{label: '', value: ''}],
-  world: [{label: '', value: ''}],
-  readBy: [{label: '', value: ''}],
+  genre: pickerDefault,
+  series: pickerDefault,
+  world: pickerDefault,
+  readBy: pickerDefault,
   pickerError: '',
 }
 

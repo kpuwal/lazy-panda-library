@@ -86,6 +86,9 @@ const bookSlice = createSlice({
     updateBook: (state, action) => {
     Object.assign(state, action.payload);
     },
+    cleanBook: (state, action) => {
+      return initialState;
+    },
   },
   extraReducers: (builder) => {
     builder
