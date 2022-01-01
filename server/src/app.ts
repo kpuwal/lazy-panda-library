@@ -38,14 +38,32 @@ app.get("/", (_req: Request, res: Response) => {
   return res.send("App is Running...");
 });
 
+const cleanData = (data: any) => {
+  if (data.totalItems !== 0) {
+    const bookInfo = data.items[0].volumeInfo;
+    const bookSubtitle = bookInfo.subtitle === undefined ? "" : bookInfo.subtitle;
+    return {
+      isFound: true,
+      title: bookInfo.title + '. ' + bookSubtitle,
+      author: bookInfo.authors.join(', '),
+      language: bookInfo.language,
+      publishedDate: bookInfo.publishedDate,
+      pageCount: bookInfo.pageCount,
+    };
+  } else {
+    return { isFound: false };
+  }
+}
+
 app.post('/api/book',(_req: Request, res: Response) => {
   const isbn = _req.body.isbn;
   axios.get(url + isbn)
     .then(function (resp: any) {
-      return res.status(200).send(resp.data);
+      const cleanedData = cleanData(resp.data);
+      return res.status(200).send(cleanedData);
     })
     .catch(function (error: Error) {
-      console.log(error);
+      return res.send(error);
     })
 })
 
@@ -79,6 +97,7 @@ app.get('/api/picker', async (_req: Request, res: Response) => {
 })
 
 app.post('/api/add-book', async (_req: Request, res: Response) => {
+  console.log("about to save!")
   try {
     const {
       title,
@@ -91,26 +110,29 @@ app.post('/api/add-book', async (_req: Request, res: Response) => {
       world,
       readBy,
     } = _req.body;
+    console.log("title ", _req.body)
     const { sheets } = await authentication();
     const writeReq = await sheets.spreadsheets.values.append({
       spreadsheetId: id,
       range: 'Sheet1',
       valueInputOption: 'USER_ENTERED',
       insertDataOption: 'INSERT_ROWS',
+      // shiftDimension: 'ROWS',
       resource: {
         values: [
           [ title, author, language, publishedDate, pageCount, genre, series, world, readBy ]
         ]
       }
     })
-
+  
     if (writeReq.status === 200) {
+      console.log('Spreadsheet updated successfully!')
       return res.json({msg: 'Spreadsheet updated successfully!'})
     }
     return res.json({msg: 'Something went wrong while updating the spreadsheet'})
   } catch (err) {
-    console.log('ERROR UPDATING THE SHEET');
-    res.status(500).send();
+    console.log('ERROR UPDATING THE SHEET', err);
+    res.send(err);
   }
 })
 

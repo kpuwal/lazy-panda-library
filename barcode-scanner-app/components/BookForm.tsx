@@ -2,46 +2,45 @@ import React, {useState, useEffect} from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text } from "react-native";
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import DropDownMenu from './DropDownMenu';
+import { RootState, useAppDispatch } from "../redux/store";
+import { useSelector } from "react-redux";
+import {updateBook} from '../redux/slices/bookSlice';
 
 type BookFormTypes = {
   children: React.ReactNode,
-  bookData: {
-    title: string,
-    subtitle: string,
-    authors: string[],
-    pageCount: number | string,
-    publishedDate: string,
-    language: string,
-  },
   pickerData: {
     genre: {label: string, value: string}[],
     series: {label: string, value: string}[],
     world: {label: string, value: string}[],
     readBy: {label: string, value: string}[],
   },
-  handleSave: any,
+  // handleSave: any,
 }
 
-const BookForm = ({children, bookData, pickerData, handleSave}: BookFormTypes) => {
+const BookForm = ({children, pickerData}: BookFormTypes) => {
+  const book = useSelector((state: RootState) => state.book);
+  const dispatch = useAppDispatch();
+console.log("BOOK ", book)
   const numLines = 2;
+  
   const [genre, setGenre] = useState('');
   const [series, setSeries] = useState('');
   const [world, setWorld] = useState('');
   const [readBy, setReadBy] = useState('');
 
-  const [bookInfo, setBookInfo] = useState({
-    title: bookData.title + '. ' + bookData.subtitle,
-    author: bookData.authors.join(', '),
-    language: bookData.language,
-    publishedDate: bookData.publishedDate,
-    pageCount: bookData.pageCount,
-  })
+  // const [bookInfo, setBookInfo] = useState({
+  //   title: book.title + '. ' + book.subtitle,
+  //   author: book.authors.join(', '),
+  //   language: book.language,
+  //   publishedDate: book.publishedDate,
+  //   pageCount: book.pageCount,
+  // })
 
-  useEffect(() => handleSaveData(), [genre, series, world, readBy])
+  // useEffect(() => handleSaveData(), [genre, series, world, readBy])
 
-  const handleSaveData = () => {
-    handleSave(bookInfo.title, bookInfo.author, bookInfo.language, bookInfo.publishedDate, bookInfo.pageCount, genre, series, world, readBy)
-  }
+  // const handleSaveData = () => {
+  //   handleSave(bookInfo.title, bookInfo.author, bookInfo.language, bookInfo.publishedDate, bookInfo.pageCount, genre, series, world, readBy)
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,22 +48,22 @@ const BookForm = ({children, bookData, pickerData, handleSave}: BookFormTypes) =
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(el) => setBookInfo({...bookInfo, title: el})}
-          defaultValue={bookInfo.title}
-          value={bookInfo.title}
+          onChangeText={(el) => dispatch(updateBook({title: el}))}
+          defaultValue={book.title}
+          value={book.title}
           editable
           multiline
           numberOfLines={2}
         />
         <PandaEditIcon />
       </View>
-      <Text style={styles.label}>{bookInfo.author.length === 1 ? 'AUTHOR:' : 'AUTHORS:'}</Text>
+      <Text style={styles.label}>AUTHOR</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(el) => setBookInfo({...bookInfo, author: el})}
-          defaultValue={bookInfo.author}
-          value={bookInfo.author}
+          onChangeText={(el) => dispatch(updateBook({author: el}))}
+          defaultValue={book.author}
+          value={book.author}
           editable
           multiline
           numberOfLines={numLines}
@@ -75,9 +74,9 @@ const BookForm = ({children, bookData, pickerData, handleSave}: BookFormTypes) =
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(el) => setBookInfo({...bookInfo, pageCount: el})}
-          defaultValue={bookInfo.pageCount.toString(10)}
-          value={bookInfo.pageCount.toString(10)}
+          onChangeText={(el) => dispatch(updateBook({pageCount: el}))}
+          defaultValue={book.pageCount.toString(10)}
+          value={book.pageCount.toString(10)}
           editable
           multiline
           numberOfLines={numLines}
@@ -89,9 +88,9 @@ const BookForm = ({children, bookData, pickerData, handleSave}: BookFormTypes) =
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(el) => setBookInfo({...bookInfo, publishedDate: el})}
-          defaultValue={bookInfo.publishedDate}
-          value={bookInfo.publishedDate}
+          onChangeText={(el) => dispatch(updateBook({publishedDate: el}))}
+          defaultValue={book.publishedDate}
+          value={book.publishedDate}
           editable
           multiline
           numberOfLines={numLines}
@@ -102,9 +101,9 @@ const BookForm = ({children, bookData, pickerData, handleSave}: BookFormTypes) =
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          onChangeText={(el) => setBookInfo({...bookInfo, language: el})}
-          defaultValue={bookInfo.language}
-          value={bookInfo.language}
+          onChangeText={(el) => dispatch(updateBook({language: el}))}
+          defaultValue={book.language}
+          value={book.language}
           editable
           multiline
           numberOfLines={numLines}

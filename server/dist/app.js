@@ -62,14 +62,32 @@ const ENV = process.env.NODE_ENV || "development";
 app.get("/", (_req, res) => {
     return res.send("App is Running...");
 });
+const cleanData = (data) => {
+    if (data.totalItems !== 0) {
+        const bookInfo = data.items[0].volumeInfo;
+        const bookSubtitle = bookInfo.subtitle === undefined ? "" : bookInfo.subtitle;
+        return {
+            isFound: true,
+            title: bookInfo.title + '. ' + bookSubtitle,
+            author: bookInfo.authors.join(', '),
+            language: bookInfo.language,
+            publishedDate: bookInfo.publishedDate,
+            pageCount: bookInfo.pageCount,
+        };
+    }
+    else {
+        return { isFound: false };
+    }
+};
 app.post('/api/book', (_req, res) => {
     const isbn = _req.body.isbn;
     axios.get(url + isbn)
         .then(function (resp) {
-        return res.status(200).send(resp.data);
+        const cleanedData = cleanData(resp.data);
+        return res.status(200).send(cleanedData);
     })
         .catch(function (error) {
-        console.log(error);
+        return res.send(error);
     });
 });
 app.get('/api/library', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -102,14 +120,17 @@ app.get('/api/picker', (_req, res) => __awaiter(void 0, void 0, void 0, function
     }
 }));
 app.post('/api/add-book', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("about to save!");
     try {
         const { title, author, language, publishedDate, pageCount, genre, series, world, readBy, } = _req.body;
+        console.log("title ", _req.body);
         const { sheets } = yield authentication();
         const writeReq = yield sheets.spreadsheets.values.append({
             spreadsheetId: id,
             range: 'Sheet1',
             valueInputOption: 'USER_ENTERED',
             insertDataOption: 'INSERT_ROWS',
+            // shiftDimension: 'ROWS',
             resource: {
                 values: [
                     [title, author, language, publishedDate, pageCount, genre, series, world, readBy]
@@ -117,13 +138,14 @@ app.post('/api/add-book', (_req, res) => __awaiter(void 0, void 0, void 0, funct
             }
         });
         if (writeReq.status === 200) {
+            console.log('Spreadsheet updated successfully!');
             return res.json({ msg: 'Spreadsheet updated successfully!' });
         }
         return res.json({ msg: 'Something went wrong while updating the spreadsheet' });
     }
     catch (err) {
-        console.log('ERROR UPDATING THE SHEET');
-        res.status(500).send();
+        console.log('ERROR UPDATING THE SHEET', err);
+        res.send(err);
     }
 }));
 app.listen(PORT, () => console.log(` 📡 Backend server: ` +
