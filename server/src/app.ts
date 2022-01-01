@@ -42,10 +42,12 @@ const cleanData = (data: any) => {
   if (data.totalItems !== 0) {
     const bookInfo = data.items[0].volumeInfo;
     const bookSubtitle = bookInfo.subtitle === undefined ? "" : bookInfo.subtitle;
+    const bookTitle = lowerCaseAllWordsExceptFirstLetters(bookInfo.title + '. ' + bookSubtitle);
+    const bookAuthor = lowerCaseAllWordsExceptFirstLetters(bookInfo.authors.join(', '))
     return {
       isFound: true,
-      title: bookInfo.title + '. ' + bookSubtitle,
-      author: bookInfo.authors.join(', '),
+      title: bookTitle,
+      author: bookAuthor,
       language: bookInfo.language,
       publishedDate: bookInfo.publishedDate,
       pageCount: bookInfo.pageCount,
@@ -53,6 +55,12 @@ const cleanData = (data: any) => {
   } else {
     return { isFound: false };
   }
+}
+
+function lowerCaseAllWordsExceptFirstLetters(string: string) {
+  return string.replace(/\S*/g, function (word) {
+      return word.charAt(0) + word.slice(1).toLowerCase();
+  });
 }
 
 app.post('/api/book',(_req: Request, res: Response) => {
@@ -81,6 +89,32 @@ app.get('/api/library', async (_req: Request, res: Response) => {
   }
 })
 
+const createPickerCategory = (items: string[]) => {
+  return items.map((el: string): {label: string, value: string} => 
+    {
+      return {label: el, value: el}
+    }
+  )
+}
+
+const cleanPickerData = (data: any) => {
+  const shiftedValues = data.values.map((item: string[]) => {
+    item.shift();
+    return item;
+  })
+  const genre = createPickerCategory(shiftedValues[0]);
+  const series = createPickerCategory(shiftedValues[1]);
+  const world = createPickerCategory(shiftedValues[2]);
+  const readBy = createPickerCategory(shiftedValues[3]);
+
+  return {
+    genre: genre,
+    series: series,
+    world: world,
+    readBy: readBy,
+  };
+}
+
 app.get('/api/picker', async (_req: Request, res: Response) => {
   try {
     const { sheets } = await authentication();
@@ -89,7 +123,8 @@ app.get('/api/picker', async (_req: Request, res: Response) => {
       range: 'Sheet1',
       majorDimension: 'COLUMNS'
     })
-    res.send(response.data);
+    const cleanedData = cleanPickerData(response.data);
+    res.send(cleanedData);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

@@ -1,39 +1,51 @@
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICountries } from '../types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 
-interface IactiveSlice {
-  mood: number,
-  country: {iso: string, label: string},
-  title: string,
-  main: boolean,
+const isLocal = true;
+
+type pickerTypes = {label: string, value: string};
+type pickerDataTypes = {
+  genre: pickerTypes[],
+  series: pickerTypes[],
+  world: pickerTypes[],
+  readBy: pickerTypes[],
+  pickerError: string,
 }
 
-const initialState: IactiveSlice = {
-  mood: 0,
-  country: { iso: "", label: "" },
-  title: "",
-  main: true,
+const initialState: pickerDataTypes = {
+  genre: [{label: '', value: ''}],
+  series: [{label: '', value: ''}],
+  world: [{label: '', value: ''}],
+  readBy: [{label: '', value: ''}],
+  pickerError: '',
 }
 
-export const activeSlice = createSlice({
+export const fetchPicker = createAsyncThunk(
+  '/api/picker',
+  async () => {
+    try {
+      const data = await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/picker`);
+    return data.json();
+    } catch(err) {
+      return err;
+    }
+  }
+)
+
+export const pickerSlice = createSlice({
   name: 'active',
   initialState,
-  reducers: {
-    activateMood: (state, action: PayloadAction<number>) => {
-      state.mood = action.payload
-    },
-    activateCountry: (state, action: PayloadAction<ICountries>) => {
-      state.country = action.payload
-    },
-    activateTitle: (state, action: PayloadAction<string>) => {
-      state.title = action.payload
-    },
-    activateMain: (state, action: PayloadAction<boolean>) => {
-      state.main = action.payload
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+    .addCase(fetchPicker.fulfilled, (state, action) => {
+      Object.assign(state, action.payload);
+    })
+    .addCase(fetchPicker.rejected, (state, action) => {
+      state.pickerError = "Server is not connected";
+    })
   },
 })
 
-export const { activateMood, activateCountry, activateTitle, activateMain } = activeSlice.actions;
-export default activeSlice.reducer;
+export default pickerSlice.reducer;

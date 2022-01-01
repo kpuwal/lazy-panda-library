@@ -5,23 +5,28 @@ import DropDownPicker from 'react-native-dropdown-picker';
 type DropDownMenuTypes = {
   data: {value: string}[],
   placeholder: string,
-  value: string,
-  setValue: any,
+  selected: any,
 }
 
-const DropDownMenu = ({data, placeholder, value, setValue}: DropDownMenuTypes) => {
+const DropDownMenu = ({data, placeholder, selected}: DropDownMenuTypes) => {
   const [open, setOpen] = useState(false);
-  
+  const [value, setValue] = useState(null);
+
   return (
     <DropDownPicker
       style={styles.container}
       open={open}
       items={data}
       setOpen={setOpen}
+      value={value}
+      setValue={setValue}
       placeholderStyle={styles.placeholder}
       closeAfterSelecting={true}
       dropDownDirection="TOP"
-      {...{placeholder, value, setValue}}
+      onChangeValue={(value) => {
+        selected(value);
+      }}
+      {...{placeholder}}
     />
   )
 }

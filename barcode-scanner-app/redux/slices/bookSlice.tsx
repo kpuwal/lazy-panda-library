@@ -93,7 +93,6 @@ const bookSlice = createSlice({
       if (action.payload.isFound) {
         const data = action.payload;
         state.title = data.title;
-        // state.subtitle = data.subtitle === undefined ? "" : data.subtitle;
         state.author = data.author;
         state.pageCount = data.pageCount;
         state.publishedDate = data.publishedDate;

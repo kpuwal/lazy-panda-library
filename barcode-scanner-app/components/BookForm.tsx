@@ -8,25 +8,26 @@ import {updateBook} from '../redux/slices/bookSlice';
 
 type BookFormTypes = {
   children: React.ReactNode,
-  pickerData: {
-    genre: {label: string, value: string}[],
-    series: {label: string, value: string}[],
-    world: {label: string, value: string}[],
-    readBy: {label: string, value: string}[],
-  },
+  // pickerData: {
+  //   genre: {label: string, value: string}[],
+  //   series: {label: string, value: string}[],
+  //   world: {label: string, value: string}[],
+  //   readBy: {label: string, value: string}[],
+  // },
   // handleSave: any,
 }
 
-const BookForm = ({children, pickerData}: BookFormTypes) => {
+const BookForm = ({children}: BookFormTypes) => {
   const book = useSelector((state: RootState) => state.book);
-  const dispatch = useAppDispatch();
-console.log("BOOK ", book)
-  const numLines = 2;
+  const pickers = useSelector((state: RootState) => state.pickers);
   
-  const [genre, setGenre] = useState('');
-  const [series, setSeries] = useState('');
-  const [world, setWorld] = useState('');
-  const [readBy, setReadBy] = useState('');
+  const dispatch = useAppDispatch();
+  const numLines = 2;
+
+  // const [genre, setGenre] = useState('');
+  // const [series, setSeries] = useState('');
+  // const [world, setWorld] = useState('');
+  // const [readBy, setReadBy] = useState('');
 
   // const [bookInfo, setBookInfo] = useState({
   //   title: book.title + '. ' + book.subtitle,
@@ -113,33 +114,29 @@ console.log("BOOK ", book)
       <View style={styles.pickerContainer}>
         <DropDownMenu
           placeholder='select  GENRE'
-          data={pickerData.genre}
-          value={genre}
-          setValue={setGenre}
+          data={pickers.genre}
+          selected={(el: string) => dispatch(updateBook({genre: el}))}
         />
       </View>
       <View style={styles.pickerContainer}>
         <DropDownMenu
           placeholder='select  SERIES'
-          data={pickerData.series}
-          value={series}
-          setValue={setSeries}
+          data={pickers.series}
+          selected={(el: string) => dispatch(updateBook({series: el}))}
         />
       </View>
       <View style={styles.pickerContainer}>
         <DropDownMenu
           placeholder='select  WORLD'
-          data={pickerData.world}
-          value={world}
-          setValue={setWorld}
+          data={pickers.world}
+          selected={(el: string) => dispatch(updateBook({world: el}))}
         />
       </View>
       <View style={styles.pickerContainer}>
         <DropDownMenu
           placeholder='select  READ BY'
-          data={pickerData.readBy}
-          value={readBy}
-          setValue={setReadBy}
+          data={pickers.readBy}
+          selected={(el: string) => dispatch(updateBook({readBy: el}))}
         />
       </View>
       {children}

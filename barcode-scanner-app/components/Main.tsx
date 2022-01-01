@@ -5,13 +5,14 @@ import BookForm from './BookForm';
 import ScanningGIF from './ScanningGIF';
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../redux/store";
-import { fetchBook, saveBook } from "../redux/slices/bookSlice";
+import { RootState, useAppDispatch } from '../redux/store';
+import { fetchBook, saveBook } from '../redux/slices/bookSlice';
+import { fetchPicker } from '../redux/slices/pickerSlice';
 
 export default function Main() {
   const book = useSelector((state: RootState) => state.book);
+  
   const [hasPermission, setHasPermission] = useState(null);
-  // const [isLoaded, setLoaded] = useState(false);
   const [isDisabled, setDisabled] = useState(false);
   const [scanned, setScanned] = useState(false);
 
@@ -38,50 +39,52 @@ export default function Main() {
   //   language: '',
   // })
 
-  const [pickerData, setPickerData] = useState({
-    genre: [{label: '', value: ''}],
-    series: [{label: '', value: ''}],
-    world: [{label: '', value: ''}],
-    readBy: [{label: '', value: ''}],
-  })
+  // const [pickerData, setPickerData] = useState({
+  //   genre: [{label: '', value: ''}],
+  //   series: [{label: '', value: ''}],
+  //   world: [{label: '', value: ''}],
+  //   readBy: [{label: '', value: ''}],
+  // })
 
-  const createPickerCategory = (items: string[]) => {
-    return items.map((el: string): {label: string, value: string} => 
-      {
-        return {label: el, value: el}
-      }
-    )
-  }
+  // const createPickerCategory = (items: string[]) => {
+  //   return items.map((el: string): {label: string, value: string} => 
+  //     {
+  //       return {label: el, value: el}
+  //     }
+  //   )
+  // }
 
-  const fetchPickerData = async () => {
-    try {
-      const newsData = await fetch(`${APP_ENV_ADDRESS}/api/picker`);
-      const json = await newsData.json();
-      const shiftedValues = json.values.map((item: string[]) => {
-        item.shift();
-        return item;
-      })
-      const genre = createPickerCategory(shiftedValues[0]);
-      const series = createPickerCategory(shiftedValues[1]);
-      const world = createPickerCategory(shiftedValues[2]);
-      const readBy = createPickerCategory(shiftedValues[3]);
+  // const fetchPickerData = async () => {
+  //   try {
+  //     const newsData = await fetch(`${APP_ENV_IP}/api/picker`);
+  //     const json = await newsData.json();
+  //     console.log("JSON ", json)
+  //     const shiftedValues = json.values.map((item: string[]) => {
+  //       item.shift();
+  //       return item;
+  //     })
+  //     const genre = createPickerCategory(shiftedValues[0]);
+  //     const series = createPickerCategory(shiftedValues[1]);
+  //     const world = createPickerCategory(shiftedValues[2]);
+  //     const readBy = createPickerCategory(shiftedValues[3]);
    
-      setPickerData({
-        genre: genre,
-        series: series,
-        world: world,
-        readBy: readBy,
-      });
-    } catch(err) {
-      alert('server not connected') // FIX errors!
-    }
-  }
+  //     setPickerData({
+  //       genre: genre,
+  //       series: series,
+  //       world: world,
+  //       readBy: readBy,
+  //     });
+  //   } catch(err) {
+  //     alert('server not connected') // FIX errors!
+  //   }
+  // }
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-      fetchPickerData();
+      // fetchPickerData();
+      dispatch(fetchPicker());
     })();
     // clearBookForm();
   }, []);
@@ -194,7 +197,7 @@ export default function Main() {
         {
           scanned && book.isLoaded ? 
           (
-            <BookForm {...{pickerData}}>
+            <BookForm>
               <View style={styles.buttonSet}>
               <TouchableHighlight
                 style={styles.button}

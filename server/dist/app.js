@@ -66,10 +66,12 @@ const cleanData = (data) => {
     if (data.totalItems !== 0) {
         const bookInfo = data.items[0].volumeInfo;
         const bookSubtitle = bookInfo.subtitle === undefined ? "" : bookInfo.subtitle;
+        const bookTitle = lowerCaseAllWordsExceptFirstLetters(bookInfo.title + '. ' + bookSubtitle);
+        const bookAuthor = lowerCaseAllWordsExceptFirstLetters(bookInfo.authors.join(', '));
         return {
             isFound: true,
-            title: bookInfo.title + '. ' + bookSubtitle,
-            author: bookInfo.authors.join(', '),
+            title: bookTitle,
+            author: bookAuthor,
             language: bookInfo.language,
             publishedDate: bookInfo.publishedDate,
             pageCount: bookInfo.pageCount,
@@ -79,6 +81,11 @@ const cleanData = (data) => {
         return { isFound: false };
     }
 };
+function lowerCaseAllWordsExceptFirstLetters(string) {
+    return string.replace(/\S*/g, function (word) {
+        return word.charAt(0) + word.slice(1).toLowerCase();
+    });
+}
 app.post('/api/book', (_req, res) => {
     const isbn = _req.body.isbn;
     axios.get(url + isbn)
@@ -104,6 +111,27 @@ app.get('/api/library', (_req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(500).send(err);
     }
 }));
+const createPickerCategory = (items) => {
+    return items.map((el) => {
+        return { label: el, value: el };
+    });
+};
+const cleanPickerData = (data) => {
+    const shiftedValues = data.values.map((item) => {
+        item.shift();
+        return item;
+    });
+    const genre = createPickerCategory(shiftedValues[0]);
+    const series = createPickerCategory(shiftedValues[1]);
+    const world = createPickerCategory(shiftedValues[2]);
+    const readBy = createPickerCategory(shiftedValues[3]);
+    return {
+        genre: genre,
+        series: series,
+        world: world,
+        readBy: readBy,
+    };
+};
 app.get('/api/picker', (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { sheets } = yield authentication();
@@ -112,7 +140,8 @@ app.get('/api/picker', (_req, res) => __awaiter(void 0, void 0, void 0, function
             range: 'Sheet1',
             majorDimension: 'COLUMNS'
         });
-        res.send(response.data);
+        const cleanedData = cleanPickerData(response.data);
+        res.send(cleanedData);
     }
     catch (err) {
         console.log(err);
