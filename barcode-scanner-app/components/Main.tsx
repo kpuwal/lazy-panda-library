@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableWithoutFeedback, Keyboard, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../redux/store';
 import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
