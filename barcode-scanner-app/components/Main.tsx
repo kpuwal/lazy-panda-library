@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableWithoutFeedback, Keyboard, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
-import { BarCodeScanner, PermissionResponse } from 'expo-barcode-scanner';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../redux/store';
 import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
 import { fetchPicker } from '../redux/slices/pickerSlice';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+
+import { Camera } from 'expo-camera';
 
 import BookForm from './BookForm';
 import ScanningGIF from './ScanningGIF';
@@ -14,7 +17,8 @@ type BarCodeScannerTypes = {
   data: string,
 }
 
-export default function Main() {  
+export default function Main() {
+  const [flash, setFlashMode] = useState(Camera.Constants.FlashMode.off);
   const [hasPermission, setHasPermission] = useState(null);
   const [isDisabled, setDisabled] = useState(false);
   const [scanned, setScanned] = useState(false);
@@ -24,17 +28,18 @@ export default function Main() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
       dispatch(fetchPicker());
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ data }: BarCodeScannerTypes) => {
+  const handleBarCodeScanned = ({ type, data }: BarCodeScannerTypes) => {
     dispatch(cleanBook(data));
     dispatch(fetchBook(data));
     setDisabled(false);
     setScanned(true);
+    setFlashMode(Camera.Constants.FlashMode.off)
   };
 
   const saveDataToDB = async () => {
@@ -52,10 +57,12 @@ export default function Main() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        <BarCodeScanner
+        <Camera
+          flashMode={flash}
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
+        <View style={styles.dimmer}>
         {
           scanned && book.isLoaded ? 
           (
@@ -80,6 +87,24 @@ export default function Main() {
         }
         {scanned ? <View /> : <Text style={styles.infoTxt}>Scanning ...</Text>}
         {!scanned || book.isLoaded ? <View /> : <Text style={styles.infoTxt}>Loading ... </Text>}
+        {!scanned &&
+          (
+            <TouchableWithoutFeedback
+              onPress={() => setFlashMode(
+                flash === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off
+              )}
+            >
+              {
+                flash === Camera.Constants.FlashMode.off ? (
+                  <MaterialCommunityIcons name="lightbulb-on" size={30} color="red" />
+                ) : (
+                  <MaterialCommunityIcons name="lightbulb" size={30} color="red" />
+                )
+              }
+            </TouchableWithoutFeedback>
+          )
+        }
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -115,5 +140,10 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
     fontSize: 20,
-  }
+  },
+  dimmer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,.3)',
+  },
 });
