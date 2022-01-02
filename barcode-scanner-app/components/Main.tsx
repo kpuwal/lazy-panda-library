@@ -19,7 +19,7 @@ type BarCodeScannerTypes = {
 
 export default function Main() {
   const [flash, setFlashMode] = useState(Camera.Constants.FlashMode.off);
-  const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState(false);
   const [isDisabled, setDisabled] = useState(false);
   const [scanned, setScanned] = useState(false);
 
