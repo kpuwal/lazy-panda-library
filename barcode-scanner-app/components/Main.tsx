@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableWithoutFeedback, Keyboard, Text, View, StyleSheet, TouchableHighlight } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanner, PermissionResponse } from 'expo-barcode-scanner';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../redux/store';
 import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
@@ -30,7 +30,7 @@ export default function Main() {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }: BarCodeScannerTypes) => {
+  const handleBarCodeScanned = ({ data }: BarCodeScannerTypes) => {
     dispatch(cleanBook(data));
     dispatch(fetchBook(data));
     setDisabled(false);

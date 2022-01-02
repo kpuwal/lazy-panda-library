@@ -126,6 +126,7 @@ const cleanPickerData = (data) => {
     const world = createPickerCategory(shiftedValues[2]);
     const readBy = createPickerCategory(shiftedValues[3]);
     return {
+        isFound: true,
         genre: genre,
         series: series,
         world: world,
@@ -152,7 +153,6 @@ app.post('/api/add-book', (_req, res) => __awaiter(void 0, void 0, void 0, funct
     console.log("about to save!");
     try {
         const { title, author, language, publishedDate, pageCount, genre, series, world, readBy, } = _req.body;
-        console.log("title ", _req.body);
         const { sheets } = yield authentication();
         const writeReq = yield sheets.spreadsheets.values.append({
             spreadsheetId: id,

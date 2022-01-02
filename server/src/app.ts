@@ -108,6 +108,7 @@ const cleanPickerData = (data: any) => {
   const readBy = createPickerCategory(shiftedValues[3]);
 
   return {
+    isFound: true,
     genre: genre,
     series: series,
     world: world,
@@ -145,7 +146,7 @@ app.post('/api/add-book', async (_req: Request, res: Response) => {
       world,
       readBy,
     } = _req.body;
-    console.log("title ", _req.body)
+
     const { sheets } = await authentication();
     const writeReq = await sheets.spreadsheets.values.append({
       spreadsheetId: id,
