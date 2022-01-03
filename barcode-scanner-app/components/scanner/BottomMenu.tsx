@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     width: '100%',
     // height: '50%',
     alignItems: 'flex-end',
+    top: '-50%',
     // paddingHorizontal: 40,
     // borderWidth: .8,
     // borderColor: 'black',

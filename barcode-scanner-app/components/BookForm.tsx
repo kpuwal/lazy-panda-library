@@ -73,7 +73,9 @@ const BookForm = ({children}: BookFormTypes) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '95%',
+    flex: 1,
+    width: '100%',
+    // height: '100%',
     backgroundColor: '#f1f1f1',
     borderRadius: 10,
   },

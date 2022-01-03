@@ -11,7 +11,7 @@ const ScanScreen = ({children}: ScannScreenTypes) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.top}><Text>Lazy Panda Library</Text></View>
+        <View style={styles.top}><Text></Text></View>
         <View style={styles.middle}>
           <View style={styles.middleLeft} />
           <View style={styles.middleMiddle} />

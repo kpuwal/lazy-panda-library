@@ -5,6 +5,7 @@ import { RootState, useAppDispatch } from '../redux/store';
 import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
 import { fetchPicker } from '../redux/slices/pickerSlice';
 import Dots from './scanner/Dots';
+import BookInfo from './book/BookInfo';
 
 import { Camera } from 'expo-camera';
 
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   buttonSet: {
     marginTop: 15,
@@ -132,12 +133,13 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
     fontSize: 22,
-    paddingBottom: 20
+    paddingBottom: 20,
+    top: '-80%',
   },
   bottomMenu: {
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-start',
     alignItems: 'center',
-    height: '25%',
+    // height: '25%',
     width: '90%',
     paddingVertical: 0,
   }
