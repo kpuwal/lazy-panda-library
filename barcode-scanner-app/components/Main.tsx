@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../redux/store';
 import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
 import { fetchPicker } from '../redux/slices/pickerSlice';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import Dots from './scanner/Dots';
 
 import { Camera } from 'expo-camera';
 
 import BookForm from './BookForm';
 import ScanningGIF from './ScanningGIF';
+import ScanScreen from './ScanScreen';
+import BottomMenu from './scanner/BottomMenu';
 
 type BarCodeScannerTypes = {
   type: string,
@@ -46,6 +48,10 @@ export default function Main() {
     setDisabled(true);
   }
 
+  const handleFlash = () => {
+    setFlashMode(flash === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off)
+  }
+
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
@@ -61,7 +67,7 @@ export default function Main() {
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
-        <View style={styles.dimmer}>
+        <ScanScreen>
         {
           scanned && book.isLoaded ? 
           (
@@ -84,26 +90,13 @@ export default function Main() {
             </BookForm>) :
             <ScanningGIF />
         }
-        {scanned ? <View /> : <Text style={styles.infoTxt}>Scanning ...</Text>}
-        {!scanned || book.isLoaded ? <View /> : <Text style={styles.infoTxt}>Loading ... </Text>}
-        {!scanned &&
-          (
-            <TouchableWithoutFeedback
-              onPress={() => setFlashMode(
-                flash === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off
-              )}
-            >
-              {
-                flash === Camera.Constants.FlashMode.off ? (
-                  <MaterialCommunityIcons name="lightbulb-on" size={30} color="red" />
-                ) : (
-                  <MaterialCommunityIcons name="lightbulb" size={30} color="red" />
-                )
-              }
-            </TouchableWithoutFeedback>
-          )
-        }
+        <View style={styles.bottomMenu}>
+          {scanned ? <View /> : <Text style={styles.infoTxt}>Scanning <Dots /></Text>}
+          {!scanned || book.isLoaded ? <View /> : <Text style={styles.infoTxt}>Loading <Dots /> </Text>}
+          {!scanned && <BottomMenu flashMode={handleFlash} isOn={flash === Camera.Constants.FlashMode.off} />
+          }
         </View>
+        </ScanScreen>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -125,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     backgroundColor: '#0080FF'
   },
   buttonLabel: {
@@ -138,11 +131,14 @@ const styles = StyleSheet.create({
   infoTxt: {
     color: 'red',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 22,
+    paddingBottom: 20
   },
-  dimmer: {
-    flex: 1,
+  bottomMenu: {
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,.3)',
-  },
+    alignItems: 'center',
+    height: '25%',
+    width: '90%',
+    paddingVertical: 0,
+  }
 });

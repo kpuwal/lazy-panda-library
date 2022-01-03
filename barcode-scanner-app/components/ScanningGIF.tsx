@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 
 export class ScanningGIF extends Component {
   render() {
@@ -7,7 +7,7 @@ export class ScanningGIF extends Component {
       <View>
         <Image 
         source={require('./../assets/5UKD.gif')}  
-        style={{width: 150, height: 150 }}
+        style={{width: 150, height: 150, marginTop: '60%', marginLeft: '20%' }}
         />
       </View>
     )
