@@ -6,13 +6,13 @@ import { fetchBook, saveBook, cleanBook } from '../redux/slices/bookSlice';
 import { fetchPicker } from '../redux/slices/pickerSlice';
 import Dots from './scanner/Dots';
 import BookInfo from './book/BookInfo';
+import ScannerCamera from './scanner/ScannerCamera';
+import ScannerMain from './scanner/ScannerMain';
 
 import { Camera } from 'expo-camera';
 
 import BookForm from './BookForm';
-import ScanningGIF from './ScanningGIF';
-import ScanScreen from './ScanScreen';
-import BottomMenu from './scanner/BottomMenu';
+import ScanningGIF from './scanner/ScanningGIF';
 
 type BarCodeScannerTypes = {
   type: string,
@@ -62,14 +62,20 @@ export default function Main() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <Camera
+      <>
+      <ScannerCamera />
+      <ScannerMain />
+      {/* <View style={styles.container}> */}
+        {/* <Camera
           flashMode={flash}
+          // ref={r => {
+          //   camera = r;
+          // }}
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-        <ScanScreen>
-        {
+          style={{flex: 1}}
+        /> */}
+        {/* <ScanScreen> */}
+        {/* {
           scanned && book.isLoaded ? 
           (
             <BookForm>
@@ -97,8 +103,9 @@ export default function Main() {
           {!scanned && <BottomMenu flashMode={handleFlash} isOn={flash === Camera.Constants.FlashMode.off} />
           }
         </View>
-        </ScanScreen>
-      </View>
+        </ScanScreen> */}
+      {/* </View> */}
+      </>
     </TouchableWithoutFeedback>
   );
 }
