@@ -6,7 +6,7 @@ export class ScanningGIF extends Component {
     return (
       <Image 
       source={require('./../../assets/5UKD.gif')}  
-      style={{ width: 150, height: 150, marginLeft: '20%', marginTop: '45%'}}
+      style={{ width: 150, height: 150 }}
       />
     )
   }

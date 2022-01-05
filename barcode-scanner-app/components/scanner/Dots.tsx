@@ -4,7 +4,7 @@ import { View, StyleSheet, Animated, Easing } from 'react-native'
 const SIZE = 3
 const MARGIN = 3
 const BG = 'rgba(172, 172, 172)'
-const ACTIVE_BG = 'red'
+const ACTIVE_BG = 'white'
 const dots = [1, 2, 3]
 const INTERVAL = 500
 const ANIMATION_DURATION = 800
@@ -106,5 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    bottom: '-8%',
+    paddingLeft: 2
   },
 })

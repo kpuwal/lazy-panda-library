@@ -15,9 +15,9 @@ type BarCodeScannerTypes = {
 }
 
 const ScannerCamera = () => {
+  const [hasPermission, setHasPermission] = useState(false);
   const scanned = useSelector((state: RootState) => state.app.scanned);
   const flash = useSelector((state: RootState) => state.app.flashMode);
-  const [hasPermission, setHasPermission] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

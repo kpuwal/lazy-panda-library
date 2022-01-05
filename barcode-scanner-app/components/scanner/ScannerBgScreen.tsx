@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { Fontisto } from '@expo/vector-icons';
 const bg = 'rgba(0, 0, 0, .15)';
 
 const ScannerBgScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.top}><Text></Text></View>
+      <View style={styles.top}>
+        <Fontisto name="shopping-barcode" size={24} color="#9a9a9a" />
+        <Text style={styles.header}>Scan ISBN Barcode</Text>
+      </View>
       <View style={styles.middle}>
         <View style={styles.middleLeft} />
         <View style={styles.middleMiddle} />
@@ -28,10 +31,14 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   top: {
+    flexDirection: 'row',
     height: '20%',
     backgroundColor: bg,
-    justifyContent: 'flex-end',
-    paddingLeft: 20,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: '10%',
+    paddingTop: '10%',
+
   },
   middle: {
     height: '40%',
@@ -46,8 +53,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '90%',
     height: '100%',
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: '#9a9a9a',
+    borderWidth: 1,
     borderRadius: 5,
     borderStyle: 'dashed',
     justifyContent: 'flex-end',
@@ -60,5 +67,11 @@ const styles = StyleSheet.create({
   bottom: {
     height: '40%',
     backgroundColor: bg,
+  },
+  header: {
+    color: '#9a9a9a',
+    paddingLeft: 5,
+    fontSize: 28,
+    fontFamily: 'Roboto_400Regular',
   },
 })
