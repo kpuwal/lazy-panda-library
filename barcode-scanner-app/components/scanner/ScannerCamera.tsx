@@ -5,7 +5,7 @@ import { Camera } from 'expo-camera';
 
 import { RootState, useAppDispatch } from '../../redux/store';
 import { fetchPicker } from '../../redux/slices/pickerSlice';
-import { fetchBook, cleanBook } from '../../redux/slices/bookSlice';
+import { fetchBook, cleanBook, updateBook } from '../../redux/slices/bookSlice';
 import { isDisabled, isScanned, setFlashMode } from '../../redux/slices/appSlice';
 import ScannerBgScreen from './ScannerBgScreen';
 
@@ -24,7 +24,7 @@ const ScannerCamera = () => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-      dispatch(fetchPicker());
+      // dispatch(fetchPicker());
     })();
   }, []);
 
@@ -33,7 +33,7 @@ const ScannerCamera = () => {
     dispatch(fetchBook(data));
     dispatch(isDisabled(false));
     dispatch(isScanned(true));
-    dispatch(setFlashMode("off"));
+    dispatch(setFlashMode('off'));
   }
 
   if (hasPermission === null) { return <View /> };
@@ -42,7 +42,7 @@ const ScannerCamera = () => {
   return (
     <Camera
       style={styles.camera}
-      flashMode={flash === "off" ? Camera.Constants.FlashMode.off : Camera.Constants.FlashMode.torch}
+      flashMode={flash === 'off' ? Camera.Constants.FlashMode.off : Camera.Constants.FlashMode.torch}
       onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
     >
      <ScannerBgScreen />

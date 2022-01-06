@@ -15,7 +15,7 @@ const ScannerMain = () => {
     <View style={styles.container}>
       <View style={styles.infoContainer}>
         {!scanned && <Text style={styles.infoTxt}>Scanning</Text>}
-        {scanned || bookIsLoaded && <Text style={styles.infoTxt}>Loading</Text>}
+        {scanned || bookIsLoaded ? <Text style={styles.infoTxt}>Loading</Text> : <View />}
         <Dots />
         <ScanningGIF />
       </View>
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 25,
     bottom: '-2%',
-    fontFamily: 'Roboto_400Regular',
+    fontFamily: 'Courier',
   }
 })

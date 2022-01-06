@@ -20,51 +20,56 @@ type BarCodeScannerTypes = {
 }
 
 export default function Main() {
-  const [flash, setFlashMode] = useState(Camera.Constants.FlashMode.off);
-  const [hasPermission, setHasPermission] = useState(false);
-  const [isDisabled, setDisabled] = useState(false);
-  const [scanned, setScanned] = useState(false);
+  // const [flash, setFlashMode] = useState(Camera.Constants.FlashMode.off);
+  // const [hasPermission, setHasPermission] = useState(false);
 
-  const book = useSelector((state: RootState) => state.book);
-  const dispatch = useAppDispatch();
+  const bookIsLoaded = useSelector((state: RootState) => state.book.isLoaded);
+  // const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-      dispatch(fetchPicker());
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestCameraPermissionsAsync();
+  //     setHasPermission(status === 'granted');
+  //     dispatch(fetchPicker());
+  //   })();
+  // }, []);
 
-  const handleBarCodeScanned = ({ type, data }: BarCodeScannerTypes) => {
-    dispatch(cleanBook(data));
-    dispatch(fetchBook(data));
-    setDisabled(false);
-    setScanned(true);
-    setFlashMode(Camera.Constants.FlashMode.off)
-  };
+  // const handleBarCodeScanned = ({ type, data }: BarCodeScannerTypes) => {
+  //   dispatch(cleanBook(data));
+  //   dispatch(fetchBook(data));
+  //   setDisabled(false);
+  //   setScanned(true);
+  //   setFlashMode(Camera.Constants.FlashMode.off)
+  // };
 
-  const saveDataToDB = async () => {
-    dispatch(saveBook(book));
-    setDisabled(true);
-  }
+  // const saveDataToDB = async () => {
+  //   dispatch(saveBook(book));
+  //   setDisabled(true);
+  // }
 
-  const handleFlash = () => {
-    setFlashMode(flash === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off)
-  }
+  // const handleFlash = () => {
+  //   setFlashMode(flash === Camera.Constants.FlashMode.off ? Camera.Constants.FlashMode.torch : Camera.Constants.FlashMode.off)
+  // }
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  // if (hasPermission === null) {
+  //   return <Text>Requesting for camera permission</Text>;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <>
+    <>
       <ScannerCamera />
       <ScannerMain />
+      <BookInfo />
+    </>
+  )
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+
+    //   <Scanner />
+      {/* <BookInfo /> */}
+      
       {/* <View style={styles.container}> */}
         {/* <Camera
           flashMode={flash}
@@ -105,9 +110,8 @@ export default function Main() {
         </View>
         </ScanScreen> */}
       {/* </View> */}
-      </>
-    </TouchableWithoutFeedback>
-  );
+    {/* </TouchableWithoutFeedback> */}
+  // );
 }
 
 const styles = StyleSheet.create({

@@ -8,7 +8,7 @@ const ScannerBgScreen = () => {
     <View style={styles.container}>
       <View style={styles.top}>
         <Fontisto name="shopping-barcode" size={24} color="#9a9a9a" />
-        <Text style={styles.header}>Scan ISBN Barcode</Text>
+        <Text style={styles.header}>ISBN Barcode</Text>
       </View>
       <View style={styles.middle}>
         <View style={styles.middleLeft} />
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'stretch',
     position: 'relative',
-    zIndex: 1000,
+    // zIndex: 1000,
   },
   top: {
     flexDirection: 'row',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   header: {
     color: '#9a9a9a',
     paddingLeft: 5,
-    fontSize: 28,
-    fontFamily: 'Roboto_400Regular',
+    fontSize: 26,
+    fontFamily: 'Courier',
   },
 })

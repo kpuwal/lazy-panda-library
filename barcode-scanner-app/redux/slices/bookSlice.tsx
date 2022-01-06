@@ -101,6 +101,7 @@ const bookSlice = createSlice({
         state.publishedDate = data.publishedDate;
         state.language = data.language;
         state.isLoaded = true;
+        console.log("book fetched")
       } else {
         state.bookError = "Panda is sad. The book was not found in the GoogleBooks database";
       }
