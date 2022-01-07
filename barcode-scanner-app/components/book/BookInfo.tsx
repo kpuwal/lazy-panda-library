@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import DropDownMenu from '../DropDownMenu';
 import Header from './infoModules/Header';
+import TextCard from './infoModules/TextCard';
+import NumberCard from './infoModules/NumberCard';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -35,18 +37,26 @@ const BookInfo = () => {
       visible={book.isLoaded}
     >
       <ScrollView style={styles.container}>
-        <Header handleClose={() => handleScanAgain()}/>
-        <View style={styles.innerContainer}>
-          
-          <View style={styles.bookCover}>
-            <Image
-              source={require('../../assets/panda.png')}
-              style={{ width: 96, height: 91, marginTop: 35 }}
-            />
-          </View>
-          <Text style={styles.title}>{book.title}</Text>
-          <Text style={styles.author}>by {book.author}</Text>
-        </View>
+        <Header handleClose={() => handleScanAgain()} />
+          <TextCard
+            item={book.title}
+            size={28}
+            isNumeric={false}
+            editItem={(el: string) => dispatch(updateBook({title: el}))}
+            showIcon={true}
+          />
+          <TextCard
+            item={book.author}
+            size={20}
+            isNumeric={false}
+            editItem={(el: string) => dispatch(updateBook({author: el}))}
+            showIcon={true}
+          />
+          <NumberCard
+            language={book.language}
+            pageCount={book.pageCount}
+            publishedDate={book.publishedDate}
+          />
       </ScrollView>
       <View style={styles.bottomMenu}>
         <View style={styles.buttonSet}>
@@ -82,13 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-
     marginTop: '10%',
-    // padding: 5,
-  },
-  innerContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: 15,
   },
   
@@ -100,12 +104,7 @@ const styles = StyleSheet.create({
     borderColor: '#808080',
     backgroundColor: '#FFFFFF',
   },
-  title: {
-    fontSize: 28,
-    fontFamily: 'Courier',
-    fontWeight: 'bold',
-    paddingVertical: 10,
-  },
+  
   author: {
     fontSize: 20,
     fontFamily: 'Courier',
