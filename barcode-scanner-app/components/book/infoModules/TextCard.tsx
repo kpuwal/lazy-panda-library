@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { StyleSheet, TextInput, View, Text } from 'react-native';
 
 type TextCardTypes = {
   size: number,
@@ -11,15 +10,8 @@ type TextCardTypes = {
 }
 
 const TextCard = ({size, item, isNumeric, editItem, showIcon}: TextCardTypes) => {
-  return (
+  return (   
     <View style={styles.inputContainer}>
-      {
-      showIcon && (
-        <View style={styles.icon}>
-          <Entypo name="edit" size={14} color="#9d9d9d" />
-        </View>
-        )
-      }
       <TextInput
         style={[styles.input, {fontSize: size}]}
         onChangeText={editItem}
@@ -39,8 +31,10 @@ export default TextCard;
 const styles = StyleSheet.create({
   inputContainer: {
     alignItems: 'center',
-    borderBottomColor: '#9d9d9d',
-    marginBottom: '3%'
+    borderRadius: 10,
+    backgroundColor: '#f8f8f8',
+    marginBottom: '3%',
+    marginHorizontal: 15,
   },
   input: {
     lineHeight: 40,
@@ -48,11 +42,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Courier',
     fontWeight: 'bold',
-    width: '100%'
+    width: '100%',
   },
   icon: {
+    // paddingLeft: 15,
+
     position: 'absolute',
-    right: 10,
-    bottom: 3
+    right: 5,
+    bottom: '9%'
+  },
+  info: {
+    // paddingLeft: 20,
+    fontSize: 10,
+    fontFamily: 'Courier',
+    color: '#9d9d9d'
   }
 });

@@ -10,11 +10,8 @@ const Header = ({handleClose}: HeaderTypes) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerIcons}>
-        {/* <MaterialCommunityIcons name="panda" size={34} color="black" /> */}
         <MaterialCommunityIcons name="book-open-page-variant" size={30} color="black" />
         <Text style={styles.infoLabel}>Book Info:</Text>
-
-        {/* <MaterialCommunityIcons name="plus" size={15} color="black" /> */}
       </View>
       <View>
         <Pressable onPress={handleClose}>
@@ -31,8 +28,9 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 25,
+    marginBottom: 30,
     marginTop: 10,
+    marginHorizontal: 15,
   },
   headerIcons: {
     flexDirection: 'row',

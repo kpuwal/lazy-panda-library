@@ -1,21 +1,19 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableHighlight, Modal, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, ScrollView, Modal } from 'react-native';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../../redux/store';
 import { updateBook, saveBook } from '../../redux/slices/bookSlice';
 import { isScanned, isDisabled } from '../../redux/slices/appSlice';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import DropDownMenu from '../DropDownMenu';
 import Header from './infoModules/Header';
 import TextCard from './infoModules/TextCard';
-import NumberCard from './infoModules/NumberCard';
-
-const windowHeight = Dimensions.get('window').height;
+import NumbersCard from './infoModules/NumbersCard';
+import BottomMenu from './infoModules/BottomMenu';
+import SelectionCard from './infoModules/SelectionCard';
 
 const BookInfo = () => {
   const book = useSelector((state: RootState) => state.book);
-  const pickers = useSelector((state: RootState) => state.pickers);
+  const picker = useSelector((state: RootState) => state.pickers);
   const app = useSelector((state: RootState) => state.app);
 
   const dispatch = useAppDispatch();
@@ -36,8 +34,9 @@ const BookInfo = () => {
       transparent={true}
       visible={book.isLoaded}
     >
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         <Header handleClose={() => handleScanAgain()} />
+        <ScrollView>
           <TextCard
             item={book.title}
             size={28}
@@ -52,34 +51,42 @@ const BookInfo = () => {
             editItem={(el: string) => dispatch(updateBook({author: el}))}
             showIcon={true}
           />
-          <NumberCard
+          <NumbersCard
             language={book.language}
             pageCount={book.pageCount}
             publishedDate={book.publishedDate}
           />
-      </ScrollView>
-      <View style={styles.bottomMenu}>
-        <View style={styles.buttonSet}>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => handleScanAgain()}
-          >
-            <>
-              <Text style={styles.buttonLabel}>Scan</Text>
-              <MaterialCommunityIcons name="repeat" size={15} color="black" />
-            </>
-          </TouchableHighlight>
-          <TouchableHighlight
-            disabled={app.disabled}
-            style={app.disabled ? [styles.button, styles.disabledButton] : styles.button}
-            onPress={() => handleSaveBook()}
-          >
-            <>
-              <Text style={styles.buttonLabel}>Save</Text>
-              <MaterialCommunityIcons name="database-plus" size={15} color="black" />
-            </>
-          </TouchableHighlight>
-        </View>
+          <SelectionCard
+            title={"Genre:"}
+            data={picker.genre}
+            active={book.genre}
+            select={(el: string) => dispatch(updateBook({genre: el}))}
+          />
+          <SelectionCard
+            title={"Series:"}
+            data={picker.series}
+            active={book.series}
+            select={(el: string) => dispatch(updateBook({series: el}))}
+          />
+          <SelectionCard
+            title={"World:"}
+            data={picker.world}
+            active={book.world}
+            select={(el: string) => dispatch(updateBook({world: el}))}
+          />
+          <SelectionCard
+            title={"Read By:"}
+            data={picker.readBy}
+            active={book.readBy}
+            select={(el: string) => dispatch(updateBook({readBy: el}))}
+          />
+          <View style={styles.dummy}/>
+        </ScrollView>
+        <BottomMenu
+          disabled={app.disabled}
+          handleScan={() => handleScanAgain()}
+          handleSave={() => handleSaveBook()}
+        />
       </View>
     </Modal>
   )
@@ -89,10 +96,16 @@ export default BookInfo
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    marginTop: '10%',
+    // padding: 15,
     backgroundColor: '#f1f1f1',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    marginTop: '10%',
+  },
+  dummy: {
+    width: '100%',
+    height: '20%',
     padding: 15,
   },
   
@@ -114,9 +127,6 @@ const styles = StyleSheet.create({
   bottomMenu: {
     height: '10%',
     backgroundColor: '#000',
-    // borderTopLeftRadius: 10,
-    // borderTopRightRadius: 10,
-    // top: -80,
   },
   buttonSet: {
     marginTop: 8,
@@ -134,7 +144,6 @@ const styles = StyleSheet.create({
     borderWidth: .8,
     borderColor: '#000',
     borderStyle: 'dashed',
-    // backgroundColor: '#0080FF'
     backgroundColor: '#fff'
 
   },

@@ -6,26 +6,26 @@ type NumberCardTypes = {
   pageCount: string | number,
   publishedDate: string,
 }
-const NumberCard = ({language, pageCount, publishedDate}: NumberCardTypes) => {
+const NumbersCard = ({language, pageCount, publishedDate}: NumberCardTypes) => {
   return (
     <View style={styles.container}>
       <View style={styles.box1}>
         <Text style={styles.header}>Language</Text>
-        <Text>{language}</Text>
+        <Text style={styles.value}>{language}</Text>
       </View>
       <View style={styles.box2}>
         <Text style={styles.header}>Page Count</Text>
-        <Text>{pageCount}</Text>
+        <Text style={styles.value}>{pageCount}</Text>
       </View>
       <View style={styles.box3}>
         <Text style={styles.header}>Published Date</Text>
-        <Text>{publishedDate}</Text>
+        <Text style={styles.value}>{publishedDate}</Text>
       </View>
     </View>
   )
 }
 
-export default NumberCard;
+export default NumbersCard;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,14 +35,19 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 12,
+    paddingBottom: 10,
     color: '#808080',
     fontFamily: 'Courier',
+  },
+  value: {
+    fontSize: 20,
   },
   box1:{},
   box2: {
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderColor: '#808080',
+    paddingHorizontal: 20,
   },
   box3: {},
 })

@@ -24,7 +24,7 @@ const ScannerCamera = () => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-      // dispatch(fetchPicker());
+      dispatch(fetchPicker());
     })();
   }, []);
 
