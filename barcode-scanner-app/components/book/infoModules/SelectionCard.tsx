@@ -6,17 +6,7 @@ type SelectionCardTypes = {
   active: string,
   select: any,
   title: string,
-}
-
-const SelectionCard = ({data, select, active, title}: SelectionCardTypes) => {
-  return (
-    <>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.container}>
-        {data.map((item, idx) => <Item key={idx} el={item.value} {...{select, active}} />)}
-      </View>
-    </>
-  )
+  icon?: any,
 }
 
 type ItemTypes = {
@@ -25,11 +15,29 @@ type ItemTypes = {
   active: string,
 }
 
+const SelectionCard = ({data, select, active, title, icon}: SelectionCardTypes) => {
+  return (
+    <>
+      <View style={styles.titleContainer}>
+        <View>{icon}</View>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+      <View style={styles.container}>
+        {data.map((item, idx) => <Item key={idx} el={item.value} {...{select, active}} />)}
+      </View>
+    </>
+  )
+}
+
 const Item = ({el, select, active}: ItemTypes) => {
+  const handleSelect = (item: string) => {
+    active === item ? select('') : select(item);
+  }
+
   return (
     <TouchableOpacity
       style={[styles.itemContainer, el === active ? styles.active : styles.reg]}
-      onPress={() => select(el)}
+      onPress={() => handleSelect(el)}
     >
       <Text style={el === active ? styles.active : styles.reg}>{el}</Text>
     </TouchableOpacity>
@@ -39,6 +47,9 @@ const Item = ({el, select, active}: ItemTypes) => {
 export default SelectionCard;
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    flexDirection: 'row',
+  },
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -55,16 +66,18 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     backgroundColor: '#000000',
     fontFamily: 'Courier',
+    fontSize: 18
   },
   reg: {
     color: '#000000',
     backgroundColor: '#FFFFFF',
     fontFamily: 'Courier',
-    fontSize: 12
+    fontSize: 18
   },
   title: {
     color: '#000000',
     padding: 15,
     fontFamily: 'Courier',
+    fontSize: 18,
   }
 })

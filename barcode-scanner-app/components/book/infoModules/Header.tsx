@@ -4,9 +4,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 type HeaderTypes = {
   handleClose: any,
+  isDisabled: boolean,
 }
 
-const Header = ({handleClose}: HeaderTypes) => {
+const Header = ({handleClose, isDisabled}: HeaderTypes) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerIcons}>
@@ -17,6 +18,9 @@ const Header = ({handleClose}: HeaderTypes) => {
         <Pressable onPress={handleClose}>
           <MaterialCommunityIcons name="close" size={24} color="black" />
         </Pressable>
+      </View>
+      <View>
+        {isDisabled && <Text style={styles.alert}>The Book Has Been Saved To The Database</Text>}
       </View>
     </View>
   )
@@ -41,6 +45,10 @@ const styles = StyleSheet.create({
     left: 8,
     fontSize: 28,
     fontFamily: 'Courier',
-    // fontVariant: 
+  },
+  alert: {
+    color: 'red',
+    fontFamily: 'Courier',
+    fontSize: 12,
   }
 })

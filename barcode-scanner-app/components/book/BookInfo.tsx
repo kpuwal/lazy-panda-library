@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../../redux/store';
 import { updateBook, saveBook } from '../../redux/slices/bookSlice';
 import { isScanned, isDisabled } from '../../redux/slices/appSlice';
+import { MaterialCommunityIcons, FontAwesome5, Fontisto } from '@expo/vector-icons';
 
 import Header from './infoModules/Header';
 import TextCard from './infoModules/TextCard';
@@ -17,6 +18,11 @@ const BookInfo = () => {
   const app = useSelector((state: RootState) => state.app);
 
   const dispatch = useAppDispatch();
+
+  const genreIcon = <MaterialCommunityIcons name="bookshelf" size={14} color="black" />
+  const seriesIcon = <FontAwesome5 name="dragon" size={14} color="black" />
+  const worldIcon = <Fontisto name="map" size={14} color="black" />
+  const readByIcon = <FontAwesome5 name="user-friends" size={14} color="black" />
 
   const handleSaveBook = () => {
     dispatch(saveBook(book));
@@ -35,7 +41,10 @@ const BookInfo = () => {
       visible={book.isLoaded}
     >
       <View style={styles.container}>
-        <Header handleClose={() => handleScanAgain()} />
+        <Header 
+          handleClose={() => handleScanAgain()}
+          isDisabled={app.disabled}
+        />
         <ScrollView>
           <TextCard
             item={book.title}
@@ -58,24 +67,28 @@ const BookInfo = () => {
           />
           <SelectionCard
             title={"Genre:"}
+            icon={genreIcon}
             data={picker.genre}
             active={book.genre}
             select={(el: string) => dispatch(updateBook({genre: el}))}
           />
           <SelectionCard
             title={"Series:"}
+            icon={seriesIcon}
             data={picker.series}
             active={book.series}
             select={(el: string) => dispatch(updateBook({series: el}))}
           />
           <SelectionCard
             title={"World:"}
+            icon={worldIcon}
             data={picker.world}
             active={book.world}
             select={(el: string) => dispatch(updateBook({world: el}))}
           />
           <SelectionCard
             title={"Read By:"}
+            icon={readByIcon}
             data={picker.readBy}
             active={book.readBy}
             select={(el: string) => dispatch(updateBook({readBy: el}))}
