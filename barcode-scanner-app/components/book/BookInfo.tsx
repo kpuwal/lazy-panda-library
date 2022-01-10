@@ -19,7 +19,7 @@ const BookInfo = () => {
 
   const dispatch = useAppDispatch();
 
-  const genreIcon = <MaterialCommunityIcons name="bookshelf" size={14} color="black" />
+  const genreIcon = <MaterialCommunityIcons name="bookshelf" size={19} color="black" />
   const seriesIcon = <FontAwesome5 name="dragon" size={14} color="black" />
   const worldIcon = <Fontisto name="map" size={14} color="black" />
   const readByIcon = <FontAwesome5 name="user-friends" size={14} color="black" />

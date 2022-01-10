@@ -9,6 +9,7 @@ type HeaderTypes = {
 
 const Header = ({handleClose, isDisabled}: HeaderTypes) => {
   return (
+    <>
     <View style={styles.header}>
       <View style={styles.headerIcons}>
         <MaterialCommunityIcons name="book-open-page-variant" size={30} color="black" />
@@ -19,10 +20,12 @@ const Header = ({handleClose, isDisabled}: HeaderTypes) => {
           <MaterialCommunityIcons name="close" size={24} color="black" />
         </Pressable>
       </View>
-      <View>
-        {isDisabled && <Text style={styles.alert}>The Book Has Been Saved To The Database</Text>}
-      </View>
+      
     </View>
+    <View>
+        {isDisabled && (<View style={styles.alertRow}><MaterialCommunityIcons name="alert-octagon" size={14} color="red" /><Text style={styles.alert}>The Book Has Been Saved To The Database</Text></View>)}
+      </View>
+    </>
   )
 }
 
@@ -45,6 +48,9 @@ const styles = StyleSheet.create({
     left: 8,
     fontSize: 28,
     fontFamily: 'Courier',
+  },
+  alertRow: {
+    flexDirection: 'row',
   },
   alert: {
     color: 'red',

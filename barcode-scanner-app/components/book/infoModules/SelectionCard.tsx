@@ -49,6 +49,8 @@ export default SelectionCard;
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   container: {
     flexDirection: 'row',
