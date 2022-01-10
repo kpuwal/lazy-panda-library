@@ -75,7 +75,8 @@ export const saveBook = createAsyncThunk(
       }
     }
 
-    await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/add-book`, config)
+    const response = await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/add-book`, config);
+    console.log("response from the server: ", response)
   }
 )
 
@@ -86,7 +87,7 @@ const bookSlice = createSlice({
     updateBook: (state, action) => {
     Object.assign(state, action.payload);
     },
-    cleanBook: (state, action) => {
+    cleanBook: () => {
       return initialState;
     },
   },
