@@ -75,8 +75,8 @@ export const saveBook = createAsyncThunk(
       }
     }
 
-    const response = await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/add-book`, config);
-    console.log("response from the server: ", response)
+    await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/add-book`, config);
+    console.log("response from the server: ")
   }
 )
 
@@ -100,7 +100,7 @@ const bookSlice = createSlice({
         state.author = data.author;
         state.pageCount = data.pageCount;
         state.publishedDate = data.publishedDate;
-        state.language = data.language;
+        state.language = data.language.toUpperCase();
         state.isLoaded = true;
         console.log("book fetched")
       } else {

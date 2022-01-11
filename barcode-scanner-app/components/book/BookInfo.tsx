@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Modal } from 'react-native';
+import { StyleSheet, View, ScrollView, Modal, Image } from 'react-native';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../../redux/store';
 import { updateBook, saveBook } from '../../redux/slices/bookSlice';
@@ -19,10 +19,30 @@ const BookInfo = () => {
 
   const dispatch = useAppDispatch();
 
-  const genreIcon = <MaterialCommunityIcons name="bookshelf" size={19} color="black" />
-  const seriesIcon = <FontAwesome5 name="dragon" size={14} color="black" />
-  const worldIcon = <Fontisto name="map" size={14} color="black" />
-  const readByIcon = <FontAwesome5 name="user-friends" size={14} color="black" />
+  // const genreIcon = <MaterialCommunityIcons name="bookshelf" size={19} color="black" />
+  // const seriesIcon = <FontAwesome5 name="dragon" size={14} color="black" />
+  // const worldIcon = <Fontisto name="map" size={14} color="black" />
+  // const readByIcon = <FontAwesome5 name="user-friends" size={14} color="black" />
+
+  const genreIcon = <Image 
+    source={require('./../../assets/genre.png')}  
+    style={{ width: 25, height: 25 }}
+  />
+
+  const seriesIcon = <Image 
+    source={require('./../../assets/series.png')}  
+    style={{ width: 25, height: 25 }}
+  />
+
+  const worldIcon = <Image 
+    source={require('./../../assets/world.png')}  
+    style={{ width: 25, height: 25 }}
+  />
+
+  const readByIcon = <Image 
+    source={require('./../../assets/reader.png')}  
+    style={{ width: 25, height: 25 }}
+  />
 
   const handleSaveBook = () => {
     dispatch(saveBook(book));
@@ -62,6 +82,7 @@ const BookInfo = () => {
           />
           <NumbersCard
             language={book.language}
+            editLanguage={(el: string) => dispatch(updateBook({language: el}))}
             pageCount={book.pageCount}
             publishedDate={book.publishedDate}
           />

@@ -50,7 +50,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    marginTop: 30,
+    // borderTopWidth: .5,
+    borderTopColor: '#d0d0d0',
   },
   container: {
     flexDirection: 'row',
@@ -78,8 +82,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#000000',
-    padding: 15,
+    padding: 5,
     fontFamily: 'Courier',
+    fontWeight: 'bold',
     fontSize: 18,
   }
 })

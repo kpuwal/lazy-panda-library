@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Pressable, View, Text } from 'react-native';
+import { StyleSheet, Pressable, View, Text, Image } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 type HeaderTypes = {
@@ -7,41 +7,53 @@ type HeaderTypes = {
   isDisabled: boolean,
 }
 
+
 const Header = ({handleClose, isDisabled}: HeaderTypes) => {
   return (
-    <>
-    <View style={styles.header}>
-      <View style={styles.headerIcons}>
-        <MaterialCommunityIcons name="book-open-page-variant" size={30} color="black" />
-        <Text style={styles.infoLabel}>Book Info:</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerIcons}>
+          {/* <MaterialCommunityIcons name="book-open-page-variant" size={30} color="black" /> */}
+          <Image 
+            source={require('./../../../assets/book.png')}  
+            style={{ width: 30, height: 30 }}
+          />
+          <Text style={styles.infoLabel}>Book Info:</Text>
+        </View>
+        <View>
+          <Pressable onPress={handleClose}>
+            <MaterialCommunityIcons name="close" size={24} color="black" />
+          </Pressable>
+        </View>
+        
       </View>
-      <View>
-        <Pressable onPress={handleClose}>
-          <MaterialCommunityIcons name="close" size={24} color="black" />
-        </Pressable>
+      <View style={styles.alertContainer}>
+        {isDisabled && (
+          <View style={styles.alertRow}>
+            <MaterialCommunityIcons name="alert-octagon" size={14} color="red" />
+            <Text style={styles.alert}>The Book Has Been Saved!</Text>
+          </View>)}
       </View>
-      
     </View>
-    <View>
-        {isDisabled && (<View style={styles.alertRow}><MaterialCommunityIcons name="alert-octagon" size={14} color="red" /><Text style={styles.alert}>The Book Has Been Saved To The Database</Text></View>)}
-      </View>
-    </>
   )
 }
 
 export default Header;
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 15,
+    marginTop: 10,
+  },
+  alertContainer: {
+    height: 40,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
-    marginTop: 10,
-    marginHorizontal: 15,
   },
   headerIcons: {
     flexDirection: 'row',
-    width: '80%',
     alignItems: 'flex-end',
   },
   infoLabel: {
@@ -51,10 +63,14 @@ const styles = StyleSheet.create({
   },
   alertRow: {
     flexDirection: 'row',
+    paddingLeft: 10,
+    alignItems: 'center',
+    paddingVertical: 10,
   },
   alert: {
     color: 'red',
     fontFamily: 'Courier',
     fontSize: 12,
+    paddingLeft: 5,
   }
 })

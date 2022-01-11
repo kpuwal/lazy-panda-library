@@ -18,6 +18,7 @@ const TextCard = ({size, item, isNumeric, editItem, showIcon}: TextCardTypes) =>
         defaultValue={item}
         editable
         multiline
+        selectionColor='pink'
         numberOfLines={4}
         value={item}
         keyboardType={isNumeric ? 'numeric' : 'default'}
