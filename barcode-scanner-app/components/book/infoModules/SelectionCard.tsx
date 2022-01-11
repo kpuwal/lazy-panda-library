@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 10,
     marginTop: 30,
-    // borderTopWidth: .5,
     borderTopColor: '#d0d0d0',
   },
   container: {

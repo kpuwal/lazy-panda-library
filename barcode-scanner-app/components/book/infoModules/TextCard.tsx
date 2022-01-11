@@ -6,10 +6,9 @@ type TextCardTypes = {
   isNumeric: boolean,
   item: string,
   editItem: any,
-  showIcon: boolean,
 }
 
-const TextCard = ({size, item, isNumeric, editItem, showIcon}: TextCardTypes) => {
+const TextCard = ({size, item, isNumeric, editItem}: TextCardTypes) => {
   return (   
     <View style={styles.inputContainer}>
       <TextInput
@@ -46,16 +45,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   icon: {
-    // paddingLeft: 15,
-
     position: 'absolute',
     right: 5,
     bottom: '9%'
   },
   info: {
-    // paddingLeft: 20,
     fontSize: 10,
     fontFamily: 'Courier',
     color: '#9d9d9d'
-  }
+  },
 });

@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../../redux/store';
 import { updateBook, saveBook } from '../../redux/slices/bookSlice';
 import { isScanned, isDisabled } from '../../redux/slices/appSlice';
-import { MaterialCommunityIcons, FontAwesome5, Fontisto } from '@expo/vector-icons';
 
 import Header from './infoModules/Header';
 import TextCard from './infoModules/TextCard';
@@ -18,11 +17,6 @@ const BookInfo = () => {
   const app = useSelector((state: RootState) => state.app);
 
   const dispatch = useAppDispatch();
-
-  // const genreIcon = <MaterialCommunityIcons name="bookshelf" size={19} color="black" />
-  // const seriesIcon = <FontAwesome5 name="dragon" size={14} color="black" />
-  // const worldIcon = <Fontisto name="map" size={14} color="black" />
-  // const readByIcon = <FontAwesome5 name="user-friends" size={14} color="black" />
 
   const genreIcon = <Image 
     source={require('./../../assets/genre.png')}  
@@ -71,20 +65,20 @@ const BookInfo = () => {
             size={28}
             isNumeric={false}
             editItem={(el: string) => dispatch(updateBook({title: el}))}
-            showIcon={true}
           />
           <TextCard
             item={book.author}
             size={20}
             isNumeric={false}
             editItem={(el: string) => dispatch(updateBook({author: el}))}
-            showIcon={true}
           />
           <NumbersCard
             language={book.language}
             editLanguage={(el: string) => dispatch(updateBook({language: el}))}
             pageCount={book.pageCount}
+            editPageCount={(el: string) => dispatch(updateBook({pageCount: el}))}
             publishedDate={book.publishedDate}
+            editPublishedDate={(el: string) => dispatch(updateBook({publishedDate: el}))}
           />
           <SelectionCard
             title={"Genre:"}
@@ -132,7 +126,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: '10%',
-    // padding: 15,
     backgroundColor: '#f1f1f1',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

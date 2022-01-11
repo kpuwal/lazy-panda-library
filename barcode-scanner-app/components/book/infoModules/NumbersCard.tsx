@@ -15,18 +15,15 @@ const NumbersCard = ({language, pageCount, publishedDate, editLanguage, editPage
     <View style={styles.container}>
       <View style={styles.box1}>
         <Text style={styles.header}>Language</Text>
-        <TextCard item={language} size={20} isNumeric={false} editItem={editLanguage} showIcon={false} />
-        {/* <Text style={styles.value}>{language}</Text> */}
+        <TextCard item={language} size={20} isNumeric={false} editItem={editLanguage} />
       </View>
       <View style={styles.box2}>
         <Text style={styles.header}>Page Count</Text>
-        <TextCard item={pageCount.toString()} size={20} isNumeric={true} editItem={editPageCount} showIcon={false} />
-        {/* <Text style={styles.value}>{pageCount}</Text> */}
+        <TextCard item={pageCount.toString()} size={20} isNumeric={true} editItem={editPageCount} />
       </View>
       <View style={styles.box3}>
         <Text style={styles.header}>Published Date</Text>
-        <TextCard item={publishedDate} size={20} isNumeric={false} editItem={editPublishedDate} showIcon={false} />
-        {/* <Text style={styles.value}>{publishedDate}</Text> */}
+        <TextCard item={publishedDate} size={20} isNumeric={false} editItem={editPublishedDate} />
       </View>
     </View>
   )
@@ -42,7 +39,6 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 12,
-    // paddingBottom: 10,
     color: '#808080',
     fontFamily: 'Courier',
   },
