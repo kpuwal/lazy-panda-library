@@ -31,7 +31,7 @@ export const fetchPicker = createAsyncThunk(
       const data = await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/picker`);
     return data.json();
     } catch(err) {
-      return err;
+      return {pickerError: "Server is not connected"};
     }
   }
 )

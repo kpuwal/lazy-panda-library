@@ -49,7 +49,7 @@ export const fetchBook = createAsyncThunk(
       );
       return data.json();
     } catch(err) {
-      return err;
+      return {bookError: err};
     }
   }
 )
@@ -74,9 +74,12 @@ export const saveBook = createAsyncThunk(
         'Content-Type': 'application/json',
       }
     }
-
-    await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/add-book`, config);
-    console.log("response from the server: ")
+    try {
+      await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/api/add-book`, config);
+    } catch (err) {
+      return { bookError: err}
+    }
+    
   }
 )
 
@@ -102,12 +105,12 @@ const bookSlice = createSlice({
         state.publishedDate = data.publishedDate;
         state.language = data.language.toUpperCase();
         state.isLoaded = true;
-        console.log("book fetched")
       } else {
-        state.bookError = "Panda is sad. The book was not found in the GoogleBooks database";
+        state.bookError = "Book has not been found in the database";
       }
     })
     .addCase(fetchBook.rejected, (state, action) => {
+      console.log('fetch book error')
       state.bookError = "Server is not connected";
     })
     .addCase(saveBook.rejected, (state, action) => {

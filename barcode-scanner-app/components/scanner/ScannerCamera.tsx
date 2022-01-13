@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useSelector } from "react-redux";
 import { Camera } from 'expo-camera';
 
@@ -7,6 +7,7 @@ import { RootState, useAppDispatch } from '../../redux/store';
 import { fetchPicker } from '../../redux/slices/pickerSlice';
 import { fetchBook, cleanBook, updateBook } from '../../redux/slices/bookSlice';
 import { isDisabled, isScanned, setFlashMode } from '../../redux/slices/appSlice';
+
 import ScannerBgScreen from './ScannerBgScreen';
 
 type BarCodeScannerTypes = {
@@ -29,7 +30,7 @@ const ScannerCamera = () => {
   }, []);
 
   const handleBarCodeScanned = ({ data }: BarCodeScannerTypes) => {
-    dispatch(cleanBook(data));
+    dispatch(cleanBook());
     dispatch(fetchBook(data));
     dispatch(isDisabled(false));
     dispatch(isScanned(true));
@@ -37,10 +38,11 @@ const ScannerCamera = () => {
   }
 
   if (hasPermission === null) { return <View /> };
-  if (hasPermission === false) { return <Text>No access to camera</Text> };
+  if (hasPermission === false) { return <Text>No access to camera</Text> };  
 
   return (
     <Camera
+      ref={ref => {camera = ref}}
       style={styles.camera}
       flashMode={flash === 'off' ? Camera.Constants.FlashMode.off : Camera.Constants.FlashMode.torch}
       onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -58,5 +60,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%'
-  }
+  },
 });
