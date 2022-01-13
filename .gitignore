@@ -14,7 +14,7 @@ barcode-scanner-app/web-build/
 
 # server
 server/node_modules/
-
+old_server
 # macOS
 .DS_Store
 
