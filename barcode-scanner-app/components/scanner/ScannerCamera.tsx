@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from "react-redux";
 import { Camera } from 'expo-camera';
 
 import { RootState, useAppDispatch } from '../../redux/store';
 import { fetchPicker } from '../../redux/slices/pickerSlice';
-import { fetchBook, cleanBook, updateBook } from '../../redux/slices/bookSlice';
+import { fetchBook, cleanBook } from '../../redux/slices/bookSlice';
 import { isDisabled, isScanned, setFlashMode } from '../../redux/slices/appSlice';
 
 import ScannerBgScreen from './ScannerBgScreen';
@@ -42,7 +42,6 @@ const ScannerCamera = () => {
 
   return (
     <Camera
-      ref={ref => {camera = ref}}
       style={styles.camera}
       flashMode={flash === 'off' ? Camera.Constants.FlashMode.off : Camera.Constants.FlashMode.torch}
       onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}

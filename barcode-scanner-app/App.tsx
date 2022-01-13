@@ -18,10 +18,8 @@ export default function App() {
   const checkConnection = async () => {
     try {
       await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/`);
-      console.log('checking?')
       setConnected(true);
     } catch (err) {
-      console.log('checked!')
       setConnected(false)
     }
   }
