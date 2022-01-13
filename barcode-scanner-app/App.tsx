@@ -56,8 +56,8 @@ const ErrorScreen = ({check}: any) => {
       <Text style={styles.txt}>...zzz </Text>
       <Text style={styles.txt}>zz... </Text>
       <MaterialCommunityIcons name="coffin" size={54} color="white" />
-      <TouchableOpacity onPress={check}>
-          <Text style={styles.button}>Reload</Text>
+      <TouchableOpacity style={styles.button} onPress={check}>
+          <Text style={styles.buttonTxt}>Reload App</Text>
       </TouchableOpacity>
     </View>
   )
@@ -73,12 +73,20 @@ const styles = StyleSheet.create({
   },
   txt:{
     color: '#fff',
-    paddingLeft: 50
+    paddingLeft: 50,
   },
   button: {
+    borderColor: '#f1f1f1',
+    borderStyle: 'dashed',
+    borderWidth: .5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 30,
+
+  },
+  buttonTxt: {
     color: '#fff',
-    fontSize: 20,
     fontFamily: 'Courier',
-    paddingTop: 30,
+    fontSize: 20,
   }
 });
