@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 12,
     color: '#808080',
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
   },
   value: {
     fontSize: 20,
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
   },
   box1:{},
   box2: {

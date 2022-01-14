@@ -10,7 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo-google-fonts/roboto": "^0.2.0",
+    "@expo-google-fonts/courier-prime": "^0.2.0",
     "@lowkey/react-native-gif": "^3.1.0",
     "@reduxjs/toolkit": "^1.7.1",
     "expo": "~43.0.2",

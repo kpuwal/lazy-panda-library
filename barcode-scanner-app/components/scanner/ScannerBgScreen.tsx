@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
     color: '#9a9a9a',
     paddingLeft: 5,
     fontSize: 26,
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
   },
 })

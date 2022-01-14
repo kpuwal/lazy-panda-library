@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   infoLabel: {
     left: 8,
     fontSize: 28,
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
   },
   alertRow: {
     flexDirection: 'row',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   alert: {
     color: 'red',
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
     fontSize: 12,
     paddingLeft: 5,
   }

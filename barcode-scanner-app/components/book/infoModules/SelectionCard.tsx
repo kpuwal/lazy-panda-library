@@ -70,19 +70,19 @@ const styles = StyleSheet.create({
   active: {
     color: '#FFFFFF',
     backgroundColor: '#000000',
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
     fontSize: 18
   },
   reg: {
     color: '#000000',
     backgroundColor: '#FFFFFF',
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
     fontSize: 18
   },
   title: {
     color: '#000000',
     padding: 5,
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
     fontWeight: 'bold',
     fontSize: 18,
   }

@@ -9,11 +9,18 @@ const isLocal = true;
 
 import Main from './components/Main';
 
-import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
+// import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
+import { 
+  useFonts,
+  CourierPrime_400Regular,
+  CourierPrime_400Regular_Italic,
+  CourierPrime_700Bold,
+  CourierPrime_700Bold_Italic 
+} from '@expo-google-fonts/courier-prime'
 
 export default function App() {
   const [isConnected, setConnected] = useState(false);
-  let [fontsLoaded] = useFonts({Roboto_400Regular});
+  let [fontsLoaded] = useFonts({ CourierPrime_400Regular });
 
   const checkConnection = async () => {
     try {
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
   },
   buttonTxt: {
     color: '#fff',
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
     fontSize: 20,
   }
 });

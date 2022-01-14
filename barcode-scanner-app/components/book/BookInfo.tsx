@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   
   author: {
     fontSize: 20,
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
     fontWeight: 'bold',
     paddingVertical: 10,
   },

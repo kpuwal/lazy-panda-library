@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 25,
     bottom: '-2%',
-    fontFamily: 'Courier',
+    fontFamily: 'Courier Prime',
   }
 })
