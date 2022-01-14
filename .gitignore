@@ -18,7 +18,8 @@ old_server
 # macOS
 .DS_Store
 
-server/credentials.json
+server/google-credentials.json
+server/google-credentials.json
 server/dist/
 barcode-scanner-app/env.d.ts
-notes.txt
+notes.txtserver/google-credentials.json
