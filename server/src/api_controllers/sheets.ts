@@ -70,7 +70,6 @@ export const readPicker = async (_req: Request, res: Response) => {
     const cleanedData = cleanPickerData(response.data);
     return res.send(cleanedData);
   } catch (err) {
-    console.log(err);
     return res.status(500).send({msg: err});
   }
 }

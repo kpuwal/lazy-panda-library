@@ -1,26 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Provider } from "react-redux";
 import { Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { store } from './redux/store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
+import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 const isLocal = true;
 
 import Main from './components/Main';
 
-// import { useFonts, Roboto_400Regular } from "@expo-google-fonts/roboto";
-import { 
-  useFonts,
-  CourierPrime_400Regular,
-  CourierPrime_400Regular_Italic,
-  CourierPrime_700Bold,
-  CourierPrime_700Bold_Italic 
-} from '@expo-google-fonts/courier-prime'
-
 export default function App() {
   const [isConnected, setConnected] = useState(false);
-  let [fontsLoaded] = useFonts({ CourierPrime_400Regular });
+  const [appIsReady, setAppIsReady] = useState(false);
 
   const checkConnection = async () => {
     try {
@@ -31,17 +24,51 @@ export default function App() {
     }
   }
 
-  useEffect(() => {checkConnection()});
-
-  if (!fontsLoaded) {
-    return <Text>loading...</Text>;
-  } else {
-    return (
-      <Provider store={store}>
-        {isConnected ? <Main /> : <ErrorScreen check={checkConnection} />}
-      </Provider>
-    );
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Courier Prime': {
+        uri: require('./assets/Courier_Prime/CourierPrime-Regular.ttf'),
+        display: Font.FontDisplay.FALLBACK,
+      },
+    });
   }
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await loadFonts();
+        await checkConnection();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+  if (!isConnected) {
+    return <ErrorScreen check={checkConnection} />
+  }
+
+  return (
+    <View
+    style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+    onLayout={onLayoutRootView}>
+    <Provider store={store}>
+      <Main /> 
+    </Provider></View>
+  );
 }
 
 const ErrorScreen = ({check}: any) => {
@@ -56,7 +83,9 @@ const ErrorScreen = ({check}: any) => {
     ]
   );
 
-  useEffect(() => createTwoButtonAlert());
+  useEffect(() => {
+    createTwoButtonAlert()
+  }, []);
 
   return (
     <View style={styles.errorContainer}>
@@ -93,7 +122,6 @@ const styles = StyleSheet.create({
   },
   buttonTxt: {
     color: '#fff',
-    fontFamily: 'Courier Prime',
     fontSize: 20,
   }
 });
