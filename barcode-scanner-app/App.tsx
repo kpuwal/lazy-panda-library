@@ -63,8 +63,9 @@ export default function App() {
 
   return (
     <View
-    style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-    onLayout={onLayoutRootView}>
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      onLayout={onLayoutRootView}
+    >
       <Provider store={store}>
         <Main /> 
       </Provider>
