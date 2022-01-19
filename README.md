@@ -1,11 +1,10 @@
 ## Lazy Panda Library Project
-Home Library in Google Spreadsheets. 
+Home Book Library in Google Spreadsheets. 
 
-### Screenshots
 ![Employee data](/images/mockup.jpg?raw=true "mockup1")
 
 ### Why
-React Native mobile application that access book's ISBN barcode information and after manual revaluation saves it to Google Spreadsheets file.
+React Native mobile application that access book's ISBN barcode information and after manual review saves it to Google Spreadsheets file.
 
 ### Concept
 ![Employee data](/images/image.png?raw=true "concept")

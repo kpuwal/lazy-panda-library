@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { ImageBackground, StyleSheet, TextInput, View } from 'react-native';
 
 type TextCardTypes = {
   size: number,
@@ -54,4 +54,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Courier Prime',
     color: '#9d9d9d'
   },
+  img: {
+    width: 200,
+    height: 200
+  }
 });
