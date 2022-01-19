@@ -30,6 +30,10 @@ export default function App() {
         uri: require('./assets/Courier_Prime/CourierPrime-Regular.ttf'),
         display: Font.FontDisplay.FALLBACK,
       },
+      'Courier Prime Bold': {
+        uri: require('./assets/Courier_Prime/CourierPrime-Bold.ttf'),
+        display: Font.FontDisplay.FALLBACK,
+      },
     });
   }
 

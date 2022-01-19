@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     fontSize: 17,
     textAlign: 'center',
-    fontFamily: 'Courier Prime',
+    fontFamily: 'Courier Prime Bold',
     fontWeight: 'bold',
     width: '100%',
   },
