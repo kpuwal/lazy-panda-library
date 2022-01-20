@@ -17,6 +17,6 @@ app.get("/", (_req: Request, res: Response) => {
   return res.send("App is Running...");
 });
 
-// app.use('/',  appRouter);
+app.use('/',  appRouter);
 
 export default app;

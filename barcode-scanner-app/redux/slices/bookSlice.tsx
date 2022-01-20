@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 
-const isLocal = true;
+const isLocal = false;
 
 type bookType = {
   title: string,

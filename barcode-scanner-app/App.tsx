@@ -7,7 +7,7 @@ import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-const isLocal = true;
+const isLocal = false;
 
 import Main from './components/Main';
 
