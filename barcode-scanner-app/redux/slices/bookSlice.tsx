@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
-
-const isLocal = false;
+import { isLocal } from '../../../CONFIG';
 
 type bookType = {
   title: string,
@@ -13,10 +12,9 @@ type bookType = {
   series: string,
   world: string,
   readBy: string,
-
-  boughtGivenOn?: string,
-  givenBy?: string,
-  lastRead?: string,
+  boughtGivenOn: string,
+  givenBy: string,
+  lastRead: string,
 }
 
 const initialState = {
@@ -30,12 +28,12 @@ const initialState = {
   series: '',
   world: '',
   readBy: '',
-  isFound: true,
-  isLoaded: false,
-  bookError: '',
   boughtGivenOn: '',
   givenBy: '',
   lastRead: '',
+  isFound: true,
+  isLoaded: false,
+  bookError: '',
 };
 
 export const fetchBook = createAsyncThunk(
@@ -76,6 +74,9 @@ export const saveBook = createAsyncThunk(
         series: book.series,
         world: book.world,
         readBy: book.readBy,
+        boughtGivenOn: book.boughtGivenOn,
+        givenBy: book.givenBy,
+        lastRead: book.lastRead,
       }),
       headers: { 
         'Content-Type': 'application/json',

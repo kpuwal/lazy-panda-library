@@ -4,10 +4,9 @@ import { Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { store } from './redux/store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
+import { isLocal } from '../CONFIG';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-
-const isLocal = false;
 
 import Main from './components/Main';
 
