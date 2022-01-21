@@ -127,7 +127,7 @@ const BookInfo = () => {
           <TextCard
             item={book.boughtGivenOn}
             size={20}
-            isNumeric={true}
+            isNumeric={false}
             editItem={(el: string) => dispatch(updateBook({boughtGivenOn: el}))}
           />
           <TitleHeader icon={givenByIcon} title="Given By:" />
@@ -141,7 +141,7 @@ const BookInfo = () => {
           <TextCard
             item={book.lastRead}
             size={20}
-            isNumeric={true}
+            isNumeric={false}
             editItem={(el: string) => dispatch(updateBook({lastRead: el}))}
           />
 

@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { store } from './redux/store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
-import { isLocal } from '../CONFIG';
+import { isLocal } from './config';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -19,7 +19,7 @@ export default function App() {
       await fetch(`${isLocal ? APP_ENV_IP : APP_ENV_ADDRESS}/`);
       setConnected(true);
     } catch (err) {
-      setConnected(false)
+      setConnected(false);
     }
   }
 

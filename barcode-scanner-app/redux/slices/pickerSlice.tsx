@@ -1,7 +1,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { APP_ENV_IP, APP_ENV_ADDRESS } from '@env';
-import { isLocal } from '../../../CONFIG';
+import {isLocal} from '../../config';
 
 type pickerTypes = {label: string, value: string};
 
