@@ -7,13 +7,11 @@ type HeaderTypes = {
   isDisabled: boolean,
 }
 
-
 const Header = ({handleClose, isDisabled}: HeaderTypes) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerIcons}>
-          {/* <MaterialCommunityIcons name="book-open-page-variant" size={30} color="black" /> */}
           <Image 
             source={require('./../../../assets/book.png')}  
             style={{ width: 30, height: 30 }}
@@ -31,7 +29,7 @@ const Header = ({handleClose, isDisabled}: HeaderTypes) => {
         {isDisabled && (
           <View style={styles.alertRow}>
             <MaterialCommunityIcons name="alert-octagon" size={14} color="red" />
-            <Text style={styles.alert}>The Book Has Been Saved!</Text>
+            <Text style={styles.alert}>The Book Has Been Successfully Saved!</Text>
           </View>)}
       </View>
     </View>

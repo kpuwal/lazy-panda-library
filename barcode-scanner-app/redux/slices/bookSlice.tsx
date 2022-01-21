@@ -13,6 +13,10 @@ type bookType = {
   series: string,
   world: string,
   readBy: string,
+
+  boughtGivenOn?: string,
+  givenBy?: string,
+  lastRead?: string,
 }
 
 const initialState = {
@@ -29,6 +33,9 @@ const initialState = {
   isFound: true,
   isLoaded: false,
   bookError: '',
+  boughtGivenOn: '',
+  givenBy: '',
+  lastRead: '',
 };
 
 export const fetchBook = createAsyncThunk(

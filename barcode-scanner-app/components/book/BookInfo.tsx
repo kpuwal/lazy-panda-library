@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Modal, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, Modal, Image, Text } from 'react-native';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../../redux/store';
 import { updateBook, saveBook } from '../../redux/slices/bookSlice';
@@ -35,6 +35,21 @@ const BookInfo = () => {
 
   const readByIcon = <Image 
     source={require('./../../assets/reader.png')}  
+    style={{ width: 25, height: 25 }}
+  />
+
+  const boughtGivenOnIcon = <Image 
+    source={require('./../../assets/gift-box.png')}  
+    style={{ width: 25, height: 25 }}
+  />
+
+  const givenByIcon = <Image 
+    source={require('./../../assets/handover.png')}  
+    style={{ width: 25, height: 25 }}
+  />
+
+  const lastReadIcon = <Image 
+    source={require('./../../assets/glasses.png')}  
     style={{ width: 25, height: 25 }}
   />
 
@@ -108,6 +123,28 @@ const BookInfo = () => {
             active={book.readBy}
             select={(el: string) => dispatch(updateBook({readBy: el}))}
           />
+          <TitleHeader icon={boughtGivenOnIcon} title="Bought/Given On:" />
+          <TextCard
+            item={book.boughtGivenOn}
+            size={20}
+            isNumeric={true}
+            editItem={(el: string) => dispatch(updateBook({boughtGivenOn: el}))}
+          />
+          <TitleHeader icon={givenByIcon} title="Given By:" />
+          <TextCard
+            item={book.givenBy}
+            size={20}
+            isNumeric={false}
+            editItem={(el: string) => dispatch(updateBook({givenBy: el}))}
+          />
+          <TitleHeader icon={lastReadIcon} title="Last Read On:" />
+          <TextCard
+            item={book.lastRead}
+            size={20}
+            isNumeric={true}
+            editItem={(el: string) => dispatch(updateBook({lastRead: el}))}
+          />
+
           <View style={styles.dummy}/>
         </ScrollView>
         <BottomMenu
@@ -120,7 +157,21 @@ const BookInfo = () => {
   )
 }
 
-export default BookInfo
+export default BookInfo;
+
+type TitleHeaderTypes = {
+  icon: any,
+  title: string,
+}
+
+const TitleHeader = ({icon, title}: TitleHeaderTypes) => {
+  return(
+    <View style={styles.titleContainer}>
+        <View>{icon}</View>
+        <Text style={styles.title}>{title}</Text>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -129,6 +180,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f1f1',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    marginTop: 30,
+    borderTopColor: '#d0d0d0',
+  },
+  title: {
+    color: '#000000',
+    padding: 5,
+    fontFamily: 'Courier Prime',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
   dummy: {
     width: '100%',
