@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   input: {
     lineHeight: 40,
-    fontSize: 17,
+    // fontSize: 17,
     textAlign: 'center',
     fontFamily: 'Courier Prime Bold',
     fontWeight: 'bold',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, ScrollView, Modal, Image, Text } from 'react-native';
+import { StyleSheet, View, ScrollView, Modal, Image, Text, TouchableWithoutFeedback, KeyboardAvoidingView , Keyboard, Platform} from 'react-native';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from '../../redux/store';
 import { updateBook, saveBook } from '../../redux/slices/bookSlice';
@@ -10,6 +10,7 @@ import TextCard from './infoModules/TextCard';
 import NumbersCard from './infoModules/NumbersCard';
 import BottomMenu from './infoModules/BottomMenu';
 import SelectionCard from './infoModules/SelectionCard';
+import DateCard from './infoModules/DateCard';
 
 const BookInfo = () => {
   const book = useSelector((state: RootState) => state.book);
@@ -69,11 +70,16 @@ const BookInfo = () => {
       transparent={true}
       visible={book.isLoaded}
     >
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
         <Header 
           handleClose={() => handleScanAgain()}
           isDisabled={app.disabled}
         />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
         <ScrollView>
           <TextCard
             item={book.title}
@@ -123,13 +129,10 @@ const BookInfo = () => {
             active={book.readBy}
             select={(el: string) => dispatch(updateBook({readBy: el}))}
           />
+
           <TitleHeader icon={boughtGivenOnIcon} title="Bought/Given On:" />
-          <TextCard
-            item={book.boughtGivenOn}
-            size={20}
-            isNumeric={false}
-            editItem={(el: string) => dispatch(updateBook({boughtGivenOn: el}))}
-          />
+          <DateCard type={"boughtGivenOn"} />
+
           <TitleHeader icon={givenByIcon} title="Given By:" />
           <TextCard
             item={book.givenBy}
@@ -137,22 +140,20 @@ const BookInfo = () => {
             isNumeric={false}
             editItem={(el: string) => dispatch(updateBook({givenBy: el}))}
           />
+
           <TitleHeader icon={lastReadIcon} title="Last Read On:" />
-          <TextCard
-            item={book.lastRead}
-            size={20}
-            isNumeric={false}
-            editItem={(el: string) => dispatch(updateBook({lastRead: el}))}
-          />
+          <DateCard type={"lastRead"} />
 
           <View style={styles.dummy}/>
         </ScrollView>
+      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+
         <BottomMenu
           disabled={app.disabled}
           handleScan={() => handleScanAgain()}
           handleSave={() => handleSaveBook()}
         />
-      </View>
     </Modal>
   )
 }

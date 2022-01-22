@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#808080',
     fontFamily: 'Courier Prime',
+    // paddingHorizontal: 10
   },
   value: {
     fontSize: 20,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: .5,
     borderRightWidth: .5,
     borderColor: '#808080',
-    paddingHorizontal: 20,
+    paddingHorizontal: 18,
   },
   box3: {},
 })
