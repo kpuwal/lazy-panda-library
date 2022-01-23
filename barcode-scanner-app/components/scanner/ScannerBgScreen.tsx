@@ -4,6 +4,9 @@ import { Fontisto } from '@expo/vector-icons';
 const bg = 'rgba(0, 0, 0, .15)';
 
 const ScannerBgScreen = () => {
+  console.log("ScannerBgScreen")
+  console.log("----------")
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>

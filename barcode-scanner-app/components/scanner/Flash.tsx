@@ -10,7 +10,7 @@ const Flash = () => {
   const color = "#9a9a9a";
   const flash = useSelector((state: RootState) => state.app.flashMode);
   const dispatch = useAppDispatch();
-
+console.log('Flash')
   return (
       <TouchableWithoutFeedback
         onPress={() => {

@@ -13,6 +13,7 @@ import Main from './components/Main';
 export default function App() {
   const [isConnected, setConnected] = useState(false);
   const [appIsReady, setAppIsReady] = useState(false);
+  console.log("====== APP =========")
 
   const checkConnection = async () => {
     try {

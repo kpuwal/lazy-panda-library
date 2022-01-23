@@ -1,15 +1,29 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from "react-redux";
 
-import { RootState } from '../../redux/store';
+import { isScanned } from '../../redux/slices/appSlice';
+import { RootState, useAppDispatch } from '../../redux/store';
 import ScanningGIF from './ScanningGIF';
 import Dots from './Dots';
 import Flash from './Flash';
+import { updateBook } from '../../redux/slices/bookSlice';
 
 const ScannerMain = () => {
   const scanned = useSelector((state: RootState) => state.app.scanned);
   const bookIsLoaded = useSelector((state: RootState) => state.book.isLoaded);
+  const bookError = useSelector((state: RootState) => state.book.bookError);
+  const dispatch = useAppDispatch();
+
+  console.log('ScannerMain')
+
+  useEffect(() => {
+    if (bookError !== '') {
+      alert(bookError);
+      dispatch(isScanned(false));
+    }
+  },[bookError])
+
 
   return (
     <View style={styles.container}>
@@ -24,7 +38,7 @@ const ScannerMain = () => {
   )
 }
 
-export default ScannerMain;
+export default React.memo(ScannerMain);
 
 const styles = StyleSheet.create({
   container: {

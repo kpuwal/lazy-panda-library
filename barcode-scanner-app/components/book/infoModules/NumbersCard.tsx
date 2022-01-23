@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#808080',
     fontFamily: 'Courier Prime',
-    // paddingHorizontal: 10
   },
   value: {
     fontSize: 20,

@@ -3,8 +3,8 @@ import BookInfo from './book/BookInfo';
 import ScannerCamera from './scanner/ScannerCamera';
 import ScannerMain from './scanner/ScannerMain';
 
-export default function Main() {
-  
+const Main = () => {
+  console.log("Main")
   return (
     <>
       <ScannerCamera />
@@ -15,5 +15,5 @@ export default function Main() {
     
 }
 
-
+export default Main;
 

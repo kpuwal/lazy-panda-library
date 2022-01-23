@@ -20,7 +20,7 @@ const ScannerCamera = () => {
   const scanned = useSelector((state: RootState) => state.app.scanned);
   const flash = useSelector((state: RootState) => state.app.flashMode);
   const dispatch = useAppDispatch();
-
+  console.log("ScannerCamera")
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -51,7 +51,7 @@ const ScannerCamera = () => {
   )
 }
 
-export default ScannerCamera;
+export default React.memo(ScannerCamera);
 
 const styles = StyleSheet.create({
   camera: {
