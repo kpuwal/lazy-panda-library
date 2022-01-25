@@ -14,7 +14,8 @@ type bookType = {
   readBy: string,
   boughtGivenOn: string,
   givenBy: string,
-  lastRead: string,
+  lastReadByJowie: string,
+  lastReadByKasia: string,
 }
 
 const initialState = {
@@ -30,7 +31,8 @@ const initialState = {
   readBy: '',
   boughtGivenOn: '',
   givenBy: '',
-  lastRead: '',
+  lastReadByJowie: '',
+  lastReadByKasia: '',
   isFound: true,
   isLoaded: false,
   bookError: '',
@@ -76,7 +78,8 @@ export const saveBook = createAsyncThunk(
         readBy: book.readBy,
         boughtGivenOn: book.boughtGivenOn,
         givenBy: book.givenBy,
-        lastRead: book.lastRead,
+        lastReadByJowie: book.lastReadByJowie,
+        lastReadByKasia: book.lastReadByKasia,
       }),
       headers: { 
         'Content-Type': 'application/json',

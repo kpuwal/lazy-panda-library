@@ -141,8 +141,11 @@ const BookInfo = () => {
             editItem={(el: string) => dispatch(updateBook({givenBy: el}))}
           />
 
-          <TitleHeader icon={lastReadIcon} title="Last Read On:" />
-          <DateCard type={"lastRead"} />
+          <TitleHeader icon={lastReadIcon} title="Last Read By Jowie On:" />
+          <DateCard type={"lastReadByJowie"} />
+
+          <TitleHeader icon={lastReadIcon} title="Last Read By Kasia On:" />
+          <DateCard type={"lastReadByKasia"} />
 
           <View style={styles.dummy}/>
         </ScrollView>
